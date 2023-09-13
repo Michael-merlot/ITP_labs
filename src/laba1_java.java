@@ -41,6 +41,7 @@ public class laba1_java {
         System.out.println(tables(31, 20));
         System.out.println(tables(123, 58));
     }
+// public|private, static - принадлежит классу, void - никакого возвращения (замена на int и тп)
 
 // 1 задание
 
@@ -85,8 +86,8 @@ public class laba1_java {
 // 6 задание
 
     public static int howManyItems(double n, double w, double h) {
-        double fabricRequiredForOneItem = w * h * 2;
-        int maxItems = (int) (n / fabricRequiredForOneItem);
+        double oneItem = w * h * 2;
+        int maxItems = (int) (n / oneItem);
         return maxItems; // 3, 6, 12
     }
 
