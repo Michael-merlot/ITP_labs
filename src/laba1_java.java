@@ -86,7 +86,7 @@ public class laba1_java {
 // 6 задание
 
     public static int howManyItems(double n, double w, double h) {
-        double oneItem = w * h * 2;
+        double oneItem = w * h * 2; // Длина и ширина (n * 2) - количество квадратных метров имеющейся ткани
         int maxItems = (int) (n / oneItem);
         return maxItems; // 3, 6, 12
     }
@@ -104,7 +104,7 @@ public class laba1_java {
 // 8 задание
 
     public static int gcd(int a, int b) {
-        while (b != 0) {
+        while (b != 0) { // Не равно
             int temp = a % b;
             a = b;
             b = temp;
@@ -115,14 +115,14 @@ public class laba1_java {
 // 9 задание
 
     public static int ticketSaler(int tickets, int price) {
-        double commissionRate = 0.72;
+        double commissionRate = 0.72; // Стоит double для int
         return (int) (tickets * price * commissionRate); // 75600, 16416, 47700
     }
 
 // 10 задание
 
     public static int tables(int students, int tablesAvailable) {
-        int tablesRequired = (students + 1) / 2;
+        int tablesRequired = (students + 1) / 2; // Добавление 1 нужно для округления вверх в случае нечетного числа студентов
         int tablesNeeded = tablesRequired - tablesAvailable;
 
         return Math.max(tablesNeeded, 0); // 1, 0, 4
