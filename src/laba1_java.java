@@ -41,7 +41,7 @@ public class laba1_java {
         System.out.println(tables(31, 20));
         System.out.println(tables(123, 58));
     }
-// public|private, static - принадлежит классу, void - никакого возвращения (замена на int и тп)
+// public|private
 
 // 1 задание
 
