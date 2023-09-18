@@ -1,19 +1,19 @@
-public class Shop extends Institution {
-    private String type;
-    private boolean isOpenOnWeekends;
+public class Shop extends Institution { // указывает, что класс Shop является подклассом класса Institution.
+    private String type; // Поле type хранит тип магазина (например, продуктовый, одежды и т.д.),
+    private boolean isOpenOnWeekends; // а isOpenOnWeekends указывает, открыт ли магазин по выходным.
 
     // Конструктор по умолчанию
     public Shop() {
         super();
         this.type = "Unknown";
         this.isOpenOnWeekends = false;
-    }
+    } // устанавливают значения по умолчанию для полей type и isOpenOnWeekends.
 
     // Конструктор с параметрами
     public Shop(String name, String address, int capacity, String type, boolean isOpenOnWeekends) {
-        super(name, address, capacity);
+        super(name, address, capacity); // вызывает конструктор родительского класса с переданными параметрами.
         this.type = type;
-        this.isOpenOnWeekends = isOpenOnWeekends;
+        this.isOpenOnWeekends = isOpenOnWeekends; // инициализируют поля переданными значениями.
     }
 
     // Геттеры и сеттеры
@@ -34,8 +34,8 @@ public class Shop extends Institution {
     }
 
     // Переопределенный метод для вывода информации о магазине
-    @Override
-    public void displayInfo() {
+    @Override //  аннотация указывает, что метод переопределяет метод родительского класса.
+    public void displayInfo() { //  это реализация абстрактного метода из родительского класса Institution.
         System.out.println("Shop Name: " + getName());
         System.out.println("Address: " + getAddress());
         System.out.println("Capacity: " + getCapacity());
