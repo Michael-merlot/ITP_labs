@@ -5,49 +5,58 @@ import java.util.Arrays;
 
 public class laba2_java {
     public static void main(String[] args) {
-        // Тестирование функции duplicateChars
+
         System.out.println(duplicateChars("Donald"));  // true
         System.out.println(duplicateChars("orange"));  // false
+        System.out.println("---");
 
-        // Тестирование функции getInitials
         System.out.println(getInitials("Ryan Gosling"));  // RG
         System.out.println(getInitials("Barack Obama"));  // BA
+        System.out.println("---");
 
         System.out.println(differenceEvenOdd(new int[]{44, 32, 86, 19}));  // 143
         System.out.println(differenceEvenOdd(new int[]{22, 50, 16, 63, 31, 55}));  // 61
+        System.out.println("---");
 
         System.out.println(equalToAvg(new int[]{1, 2, 3, 4, 5}));  // true
         System.out.println(equalToAvg(new int[]{1, 2, 3, 4, 6}));  // false
+        System.out.println("---");
 
         printArray(indexMult(new int[]{1, 2, 3}));  // [0, 2, 6]
         printArray(indexMult(new int[]{3, 3, -2, 408, 3, 31}));  // [0, 3, -4, 1224, 15, 186]
+        System.out.println("---");
 
         System.out.println(reverse("Hello World"));       // "dlroW olleH"
         System.out.println(reverse("The quick brown fox."));  // ".xof nworb kciuq ehT"
+        System.out.println("---");
 
         System.out.println(Tribonacci(6));  // 7
         System.out.println(Tribonacci(10));  // 81
+        System.out.println("---");
 
         System.out.println(pseudoHash(5));  // Например: "04bf2"
         System.out.println(pseudoHash(10));  // Например: "2d9c45e1f3"
         System.out.println(pseudoHash(0));  // ""
+        System.out.println("---");
 
         System.out.println(botHelper("Hello, I’m under the water, please help me"));  // "Вызов сотрудника"
         System.out.println(botHelper("Two pepperoni pizzas please"));  // "Продолжайте ожидание"
+        System.out.println("---");
 
         System.out.println(isAnagram("listen", "silent"));  // true
         System.out.println(isAnagram("eleven plus two", "twelve plus one"));  // true
         System.out.println(isAnagram("hello", "world"));  // false
+        System.out.println("---");
     }
 
 // 1 задание
 
-    public static boolean duplicateChars(String s) {
+    public static boolean duplicateChars(String s) { // проверяет наличие дубликатов символов в переданной строке
         Set<Character> charSet = new HashSet<>();
-
+// создание пустого хэш который хранит в себе объекты
         String lowerCaseStr = s.toLowerCase();
 
-        for (char c : lowerCaseStr.toCharArray()) {
+        for (char c : lowerCaseStr.toCharArray()) { // проходит через каждый символ
             if (charSet.contains(c)) {
                 return true;
             }
@@ -61,7 +70,7 @@ public class laba2_java {
     public static String getInitials(String name) {
         String[] parts = name.split(" ");
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Input should contain exactly two words");
+            throw new IllegalArgumentException("Должно быть 2 слова");
         }
 
         return (parts[0].charAt(0) + "" + parts[1].charAt(0)).toUpperCase();
@@ -72,7 +81,7 @@ public class laba2_java {
     public static int differenceEvenOdd(int[] numbers) {
         int sum = 0;
 
-        for (int num : numbers) {
+        for (int num : numbers) { // по каждому числу num в массиве
             if (num % 2 == 0) {  // Если число четное
                 sum -= num;
             } else {             // Если число нечетное
@@ -80,7 +89,7 @@ public class laba2_java {
             }
         }
 
-        return Math.abs(sum); // Возвращаем абсолютное значение разницы
+        return Math.abs(sum); // преобразовывает - числа в +
     }
 
 // 4 задание
@@ -88,22 +97,22 @@ public class laba2_java {
     public static boolean equalToAvg(int[] numbers) {
         int sum = 0;
 
-        // Считаем сумму всех элементов массива
+        // складывает все числа в массиве и сохраняет сумму в сам
         for (int num : numbers) {
             sum += num;
         }
 
-        // Вычисляем среднее арифметическое
-        double avg = (double) sum / numbers.length;
+        // сумма всех чисел на количество
+        double api = (double) sum / numbers.length;
 
-        // Проверяем, есть ли в массиве элемент, равный среднему арифметическому
+        // проверяем, есть ли в массиве элемент == ср.арифмет числу
         for (int num : numbers) {
-            if (num == avg) {
-                return true;
+            if (num == api) {
+                return true; // =
             }
         }
 
-        return false;
+        return false; // -=
     }
 
 // 5 задание
