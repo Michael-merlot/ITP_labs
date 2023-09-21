@@ -51,7 +51,7 @@ public class laba2_java {
 
 // 1 задание
 
-    public static boolean duplicateChars(String s) { // проверяет наличие дубликатов символов в переданной строке
+    public static boolean duplicateChars(String s) { // проверяет наличие дубликатов символов в строке
         Set<Character> charSet = new HashSet<>();
 // создание пустого хэш который хранит в себе объекты
         String lowerCaseStr = s.toLowerCase();
@@ -69,7 +69,7 @@ public class laba2_java {
 
     public static String getInitials(String name) {
         String[] parts = name.split(" ");
-        if (parts.length != 2) {
+        if (parts.length != 2) { // проверка
             throw new IllegalArgumentException("Должно быть 2 слова");
         }
 
@@ -127,7 +127,7 @@ public class laba2_java {
         return result;
     }
 
-    // Вспомогательный метод для вывода массива
+
     public static void printArray(int[] arr) {
         System.out.print("[");
         for (int i = 0; i < arr.length; i++) {
@@ -175,7 +175,7 @@ public class laba2_java {
         StringBuilder result = new StringBuilder(length);
         Random rand = new Random();
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) { // столько раз, сколько длина строки
             int randomIndex = rand.nextInt(characters.length());
             result.append(characters.charAt(randomIndex));
         }
