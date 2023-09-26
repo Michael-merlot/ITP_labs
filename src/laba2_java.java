@@ -40,6 +40,7 @@ public class laba2_java {
         System.out.println("---");
 
         System.out.println(botHelper("Hello, I’m under the water, please help me"));  // "Вызов сотрудника"
+        System.out.println(botHelper("Hello, I’m under the water, please helper"));
         System.out.println(botHelper("Two pepperoni pizzas please"));  // "Продолжайте ожидание"
         System.out.println("---");
 
@@ -186,11 +187,13 @@ public class laba2_java {
 // 9 задание
 
     public static String botHelper(String message) {
-        if (message.toLowerCase().contains("help")) {
-            return "Вызов сотрудника";
-        } else {
-            return "Продолжайте ожидание";
+        String[] words = message.split(" ");
+        for (String word : words) {
+            if (word.equalsIgnoreCase("help")){
+                return "Вызов сотрудника";
+            }
         }
+         return "Продолжайте ожидание";
     }
 
 // 10 задание
