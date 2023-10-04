@@ -56,7 +56,7 @@ public class laba3_java {
         System.out.println("---");
 
         System.out.println(commonVowel("Hello world"));  // "o"
-        System.out.println(commonVowel("Actions speak louder than words."));  // "a"
+        System.out.println(commonVowel("Actions speak louder than words."));  // "o"
         System.out.println("---");
 
         int[][] data = {
@@ -83,31 +83,21 @@ public class laba3_java {
     }
 
     // 1 задание
-    public static String replaceVowels(String str) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : str.toCharArray()) {
-            if ("AEIOUaeiou".indexOf(c) != -1) {
-                sb.append('*');
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
+    public static String replaceVowels(String word) {
+        return word.replaceAll("(?i)[aeiouy]", "*");
     }
-
 // 2 задание
 
-    public static String stringTransform(String str) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            if (i < str.length() - 1 && str.charAt(i) == str.charAt(i + 1)) {
-                sb.append("Double").append(Character.toUpperCase(str.charAt(i)));
-                i++; // Пропускаем следующий символ, так как он уже был учтён
-            } else {
-                sb.append(str.charAt(i));
+    public static String stringTransform(String word){
+        char[] wordIn = word.toCharArray();
+        String simb = "";
+        for (int i = 1; i < wordIn.length; i++){
+            if (wordIn[i] == wordIn[i-1]){
+                simb = String.valueOf(wordIn[i]);
+                word = word.replace((simb + simb), "Double" + simb);
             }
         }
-        return sb.toString();
+        return word;
     }
 
 // 3 задание
@@ -140,55 +130,43 @@ public class laba3_java {
 
 // 5 задание
 
-    public static int countRoots(int[] coefficients) {
-        int a = coefficients[0];
-        int b = coefficients[1];
-        int c = coefficients[2];
-
-        int discriminant = b * b - 4 * a * c;
-
-        // Если дискриминант меньше нуля, корней нет
-        if (discriminant < 0) {
-            return 0;
+    public static int countRoots(int[] args){
+        int D = args[1] * args[1] - 4 * args[0] * args[2];
+        double x1 = (-args[1] + Math.sqrt(D))/(2 * args[0]);
+        double x2 = (-args[1] - Math.sqrt(D))/(2 * args[0]);
+        if (D >= 0){
+            if (x1 == Math.floor(x1) && x2 == Math.floor(x2)){
+                if (x1 != x2){
+                    return 2;
+                } else {
+                    return 1;
+                }
+            }
         }
-
-        // Если дискриминант равен нулю, один корень
-        if (discriminant == 0) {
-            double root = (double) -b / (2 * a);
-            return (root == (int) root) ? 1 : 0;
-        }
-
-        // Если дискриминант больше нуля, два корня
-        double root1 = (double) (-b + Math.sqrt(discriminant)) / (2 * a);
-        double root2 = (double) (-b - Math.sqrt(discriminant)) / (2 * a);
-
-        int count = 0;
-        if (root1 == (int) root1) count++;
-        if (root2 == (int) root2) count++;
-
-        return count;
+        return 0;
     }
 
 // 6 задание
 
-    public static ArrayList<String> salesData(String[][] data) {
-        HashSet<String> commonShops = new HashSet<>(Arrays.asList(data[0]).subList(1, data[0].length));
-        ArrayList<String> result = new ArrayList<>();
+    public static ArrayList<String> salesData(String[][] salesIn){
+        ArrayList<String> maxSalesItems = new ArrayList<>();
+        int maxSales = 0;
 
-        for (String[] row : data) {
-            HashSet<String> shops = new HashSet<>(Arrays.asList(row).subList(1, row.length));
-            commonShops.retainAll(shops);
-        }
+        for (String[] item : salesIn) {
+            int currentSales = item.length - 1;  // -1 to exclude the name of the item
 
-        for (String[] row : data) {
-            HashSet<String> shops = new HashSet<>(Arrays.asList(row).subList(1, row.length));
-            if (shops.containsAll(commonShops)) {
-                result.add(row[0]);
+            if (currentSales > maxSales) {
+                maxSales = currentSales;
+                maxSalesItems.clear();
+                maxSalesItems.add(item[0]);
+            } else if (currentSales == maxSales) {
+                maxSalesItems.add(item[0]);
             }
         }
 
-        return result;
+        return maxSalesItems;
     }
+
 
 // 7 задание
 
@@ -211,16 +189,19 @@ public class laba3_java {
             return false;
         }
 
-        boolean shouldIncrease = arr[0] > arr[1];  // Определяем начальное условие (убывание или возрастание)
-
         for (int i = 0; i < arr.length - 1; i++) {
-            if (shouldIncrease && arr[i] >= arr[i + 1]) {
-                return false;
+            // For even indices (0-based)
+            if (i % 2 == 0) {
+                if (arr[i] <= arr[i + 1]) {
+                    return false;
+                }
             }
-            if (!shouldIncrease && arr[i] <= arr[i + 1]) {
-                return false;
+            // For odd indices
+            else {
+                if (arr[i] >= arr[i + 1]) {
+                    return false;
+                }
             }
-            shouldIncrease = !shouldIncrease;  // Изменяем условие на противоположное
         }
 
         return true;
@@ -234,12 +215,12 @@ public class laba3_java {
         char mostCommon = ' ';
         int maxCount = 0;
 
-        for (char c : sentence.toCharArray()) {
-            if (vowels.indexOf(c) != -1) {
-                frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
-                if (frequencyMap.get(c) > maxCount) {
-                    maxCount = frequencyMap.get(c);
-                    mostCommon = c;
+        for (char i : sentence.toCharArray()) {
+            if (vowels.indexOf(i) != -1) {
+                frequencyMap.put(i, frequencyMap.getOrDefault(i, 0) + 1);
+                if (frequencyMap.get(i) > maxCount) {
+                    maxCount = frequencyMap.get(i);
+                    mostCommon = i;
                 }
             }
         }
