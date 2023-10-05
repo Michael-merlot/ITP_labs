@@ -59,7 +59,7 @@ public class laba3_java {
         System.out.println(commonVowel("Actions speak louder than words."));  // "o"
         System.out.println("---");
 
-        int[][] data = {
+        int[][] data3 = {
                 {1, 2, 3, 4, 5},
                 {6, 7, 8, 9, 10},
                 {5, 5, 5, 5, 5},
@@ -67,10 +67,10 @@ public class laba3_java {
                 {1, 0, 11, 10, 1}
         };
 
-        dataScience(data);
-        printMatrix(data);
+        dataScience(data3);
+        printMatrix(data3);
 
-        data = new int[][] {
+        int[][] data4 = {
                 {6, 4, 19, 0, 0},
                 {81, 25, 3, 1, 17},
                 {48, 12, 60, 32, 14},
@@ -78,8 +78,8 @@ public class laba3_java {
                 {5, 73, 0, 4, 21}
         };
 
-        dataScience(data);
-        printMatrix(data);
+        dataScience(data4);
+        printMatrix(data4);
     }
 
     // 1 задание
@@ -88,13 +88,13 @@ public class laba3_java {
     }
 // 2 задание
 
-    public static String stringTransform(String word){
-        char[] wordIn = word.toCharArray();
-        String simb = "";
-        for (int i = 1; i < wordIn.length; i++){
-            if (wordIn[i] == wordIn[i-1]){
-                simb = String.valueOf(wordIn[i]);
-                word = word.replace((simb + simb), "Double" + simb);
+    public static String stringTransform(String word) {
+        char[] wordIn = word.toCharArray(); // массив символов(хранение) (стр в символы)
+        String simb = ""; // нач значение
+        for (int i = 1; i < wordIn.length; i++) {
+            if (wordIn[i] == wordIn[i - 1]) { // проверка, текущ с пред
+                simb = String.valueOf(wordIn[i]); // true
+                word = word.replace((simb + simb), "Double" + simb); // заменяет все вхождение двух символов
             }
         }
         return word;
@@ -114,14 +114,14 @@ public class laba3_java {
 // 4 задание
 
     public static boolean numCheck(int num) {
-        int sumOfSquares = 0;
-        int temp = num;
+        int sumOfSquares = 0; // хранение суммы кв цифр числа
+        int temp = num; // хранение вр значения числа (изменение чисел при вычислении)
 
         // Вычисляем сумму квадратов всех цифр числа
         while (temp > 0) {
             int digit = temp % 10;
             sumOfSquares += digit * digit;
-            temp /= 10;
+            temp /= 10; // удаляет посл цифру
         }
 
         // Проверяем четность суммы и самого числа
@@ -130,16 +130,16 @@ public class laba3_java {
 
 // 5 задание
 
-    public static int countRoots(int[] args){
+    public static int countRoots(int[] args) {
         int D = args[1] * args[1] - 4 * args[0] * args[2];
-        double x1 = (-args[1] + Math.sqrt(D))/(2 * args[0]);
-        double x2 = (-args[1] - Math.sqrt(D))/(2 * args[0]);
-        if (D >= 0){
-            if (x1 == Math.floor(x1) && x2 == Math.floor(x2)){
-                if (x1 != x2){
-                    return 2;
+        double x1 = (-args[1] + Math.sqrt(D)) / (2 * args[0]);
+        double x2 = (-args[1] - Math.sqrt(D)) / (2 * args[0]);
+        if (D >= 0) {
+            if (x1 == Math.floor(x1) && x2 == Math.floor(x2)) { // целыми числами
+                if (x1 != x2) {
+                    return 2; // false
                 } else {
-                    return 1;
+                    return 1; // true
                 }
             }
         }
@@ -147,17 +147,17 @@ public class laba3_java {
     }
 
 // 6 задание
+// динамический массив изм свой размер во время выполнения
+    public static ArrayList<String> salesData(String[][] salesIn) {
+        ArrayList<String> maxSalesItems = new ArrayList<>(); // создает пустой список и хранит имена товаров
+        int maxSales = 0; // хранит макс кол-во
 
-    public static ArrayList<String> salesData(String[][] salesIn){
-        ArrayList<String> maxSalesItems = new ArrayList<>();
-        int maxSales = 0;
-
-        for (String[] item : salesIn) {
-            int currentSales = item.length - 1;  // -1 to exclude the name of the item
-
+        for (String[] item : salesIn) { // каждую строку в дв массиве
+            int currentSales = item.length - 1;
+// вычисляет кол-во магазинов прод тек тов и -1 для искл имени товара
             if (currentSales > maxSales) {
-                maxSales = currentSales;
-                maxSalesItems.clear();
+                maxSales = currentSales; // хранит кол-во магазинов
+                maxSalesItems.clear(); // очищаем старые и добавляем новые item
                 maxSalesItems.add(item[0]);
             } else if (currentSales == maxSales) {
                 maxSalesItems.add(item[0]);
@@ -171,12 +171,12 @@ public class laba3_java {
 // 7 задание
 
     public static boolean validSplit(String sentence) {
-        String[] words = sentence.split(" ");
-        for (int i = 0; i < words.length - 1; i++) {
-            char lastChar = words[i].charAt(words[i].length() - 1);
-            char firstCharNextWord = words[i + 1].charAt(0);
+        String[] words = sentence.split(" "); // разбивает стр sent на массив слов words
+        for (int i = 0; i < words.length - 1; i++) { // через все слова в массиве words
+            char lastChar = words[i].charAt(words[i].length() - 1); // один символ и извлекаем из words
+            char firstCharNextWord = words[i + 1].charAt(0); // -1 используется для коррекции индекса
             if (lastChar != firstCharNextWord) {
-                return false;
+                return false; // не равны
             }
         }
         return true;
@@ -189,16 +189,16 @@ public class laba3_java {
             return false;
         }
 
-        for (int i = 0; i < arr.length - 1; i++) {
-            // For even indices (0-based)
-            if (i % 2 == 0) {
-                if (arr[i] <= arr[i + 1]) {
+        for (int i = 0; i < arr.length - 1; i++) { // через все элементы массива кроме ласт
+            // Для четных индексов (на основе 0)
+            if (i % 2 == 0) { // 1 - 0 / 2 - 1
+                if (arr[i] <= arr[i + 1]) { //след эл, то массив  не волна
                     return false;
                 }
             }
-            // For odd indices
+            // Для нечетных индексов
             else {
-                if (arr[i] >= arr[i + 1]) {
+                if (arr[i] >= arr[i + 1]) { //след эл, то массив не волна
                     return false;
                 }
             }
@@ -210,15 +210,15 @@ public class laba3_java {
 // 9 задание
 
     public static String commonVowel(String sentence) {
-        HashMap<Character, Integer> frequencyMap = new HashMap<>();
+        HashMap<Character, Integer> frequencyMap = new HashMap<>(); // инт кол-во раз встреч в стр
         String vowels = "aeiouAEIOU";
-        char mostCommon = ' ';
-        int maxCount = 0;
+        char mostCommon = ' '; // хранение наиболее встреч гласной (по умолчанию)
+        int maxCount = 0; // хранение кол-во вхождения
 
         for (char i : sentence.toCharArray()) {
-            if (vowels.indexOf(i) != -1) {
-                frequencyMap.put(i, frequencyMap.getOrDefault(i, 0) + 1);
-                if (frequencyMap.get(i) > maxCount) {
+            if (vowels.indexOf(i) != -1) { // проверка гласная?
+                frequencyMap.put(i, frequencyMap.getOrDefault(i, 0) + 1); // увел счетчика тек гласных на 1
+                if (frequencyMap.get(i) > maxCount) { // встр ли чаще?
                     maxCount = frequencyMap.get(i);
                     mostCommon = i;
                 }
@@ -231,24 +231,22 @@ public class laba3_java {
 // 10 задание
 
     public static void dataScience(int[][] matrix) {
-        int n = matrix.length;
-        for (int i = 0; i < n; i++) {
-            int sum = 0;
-            int count = 0;
-            for (int j = 0; j < n; j++) {
-                if (i != j) {
-                    sum += matrix[j][i];
-                    count++;
-                }
+        int n = matrix.length;  // Получаем размер матрицы (число строк)
+        for (int i = 0; i < n; i++) {  // Проходим по каждой строке
+            int sum = 0;  // Сумма элементов в текущей колонне
+            for (int j = 0; j < n; j++) {  // Проходим по каждой колонне
+                if (i != j) sum += matrix[j][i];  // Суммируем все элементы, кроме диагонального
             }
-            matrix[i][i] = sum / count;
+            matrix[i][i] = sum / (n - 1);  // Вычисляем среднее и заменяем диагональный элемент
         }
     }
 
+
+    // Метод для вывода матрицы
     public static void printMatrix(int[][] matrix) {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print(matrix[i][j] + " ");
+        for (int[] row : matrix) {  // Проходим по каждой строке матрицы
+            for (int val : row) {  // Проходим по каждому элементу в строке
+                System.out.print(val + " ");
             }
             System.out.println();
         }
