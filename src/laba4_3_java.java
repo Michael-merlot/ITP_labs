@@ -66,9 +66,9 @@ public class laba4_3_java {
     // Задание 2. напишите функцию, которая принимает строку и заменяет две идущие подряд буквы по шаблону «Double*».
 
     public static String stringTransform(String string) {
-        String re = "(.)\\1"; // (.) - любой символ в стр, указывает 1 захватывающую группу (// для экранирования символа обратного слэша)
+        String zum = "(.)\\1"; // (.) - любой символ в стр, указывает 1 захватывающую группу (// для экранирования символа обратного слэша)
 
-        String result = string.replaceAll(re, "Double$1");
+        String result = string.replaceAll(zum, "Double$1");
 
         return result; // heDoublelo, bDoubleoDoublekDoubleeper
     }
@@ -90,7 +90,7 @@ public class laba4_3_java {
         return cub[0] <= deep[0] && cub[1] <= deep[1]; // true, true, false
     }
 
-
+    // проверка умещаются ли две наименьшие стороны пара в отверстие
 
     /* 4. Создайте функцию, которая принимает число в качестве входных данных и возвращает true,
     если сумма квадратов его цифр имеет ту же четность, что и само число. В противном случае верните false.*/
@@ -117,12 +117,12 @@ public class laba4_3_java {
         int b = coefficients[1];
         int c = coefficients[2];
 
-        int D = b * b - 4 * a * c; // дискриминант
+        int D = b * b - 4 * a * c;
         int intRootCount = 0; // используется для подсчета кол-ва корней
 
         if (D >= 0) {
-            double x_1 = (-b + Math.sqrt(D)) / (2.0 * a); // первый корень
-            double x_2  = (-b - Math.sqrt(D)) / (2.0 * a); // второй корень
+            double x_1 = (-b + Math.sqrt(D)) / (2.0 * a);
+            double x_2  = (-b - Math.sqrt(D)) / (2.0 * a);
 
             intRootCount += (int)x_1 == x_1 ? 1 : 0; // проверка является ли первый корень целым числом
             if (D > 0) {
@@ -138,16 +138,16 @@ public class laba4_3_java {
     проданы в каждом из магазинов. */
 
     public static String[] salesData(String[][] data) {
-        int maxLen = 0; // хранит макс кол-во магазинов для товара
+        int maxShop = 0; // хранит макс кол-во магазинов для товара
         for (String[] row : data) { // вычисляет макс кол-во магазинов для 1 товара
-            if (row.length > maxLen) { // по всем строкам двумерного массива data
-                maxLen = row.length; // row - кол-во элементов в стр
+            if (row.length > maxShop) { // по всем строкам двумерного массива data
+                maxShop = row.length; // row - кол-во элементов в стр
             }
         }
         int count = 0; // для подсчета кол-ва товаров
         String[] result = new String[data.length]; // результирующий массив
-        for (String[] row : data) { // заполняет массив result товарами, продаются в maxLen магазинах
-            if (row.length == maxLen) { // равно ли кол-во магазинов для тек товара
+        for (String[] row : data) { // заполняет массив result товарами, продаются в maxShop магазинах
+            if (row.length == maxShop) { // равно ли кол-во магазинов для тек товара
                 result[count] = row[0]; // в стр тек товара адд в массив на позицию count
                 count++;
             }
@@ -191,7 +191,7 @@ public class laba4_3_java {
 
     public static char commonVowel(String sentence) {
         String vowels = "aeiouAEIOU"; // список гласных букв
-        int[] counts = new int[200]; // массив для подсчета кол-ва буквы. (
+        int[] counts = new int[200]; // массив для подсчета кол-ва буквы.
         char commonVowel = ' '; // для хранения самой часто встреч гласной буквы
 
         for (char c : sentence.toCharArray()) { // по каждому символу в стр
