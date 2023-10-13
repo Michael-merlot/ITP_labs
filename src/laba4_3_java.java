@@ -118,7 +118,7 @@ public class laba4_3_java {
         int c = coefficients[2];
 
         int D = b * b - 4 * a * c;
-        int intRootCount = 0; // используется для подсчета кол-ва корней
+        int intRootCount = 0; // для подсчета кол-ва корней
 
         if (D >= 0) {
             double x_1 = (-b + Math.sqrt(D)) / (2.0 * a);
