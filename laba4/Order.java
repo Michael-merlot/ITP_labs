@@ -4,7 +4,7 @@ import java.util.List; // список
 public class Order {
     private String orderDate; // дата заказа
     private List<String> items; // списки
-    private String status; //
+    private String status;
 
     public Order(String orderDate, List<String> items, String status) {
         this.orderDate = orderDate;

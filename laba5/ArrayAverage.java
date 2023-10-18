@@ -5,14 +5,14 @@ public class ArrayAverage {
         double average = 0; // хранения ср ариф
 
         try { // обработка массива (может возникнуть исключение)
-            for (int i = 0; i <= arr.length; i++) { // Добавим ошибку: i <= arr.length (к выходу за границы)
-                sum += arr[i]; // add тек элемента массива к sum
+            for (int i = 0; i <= arr.length; i++) {
+                sum += arr[i]; // тек элемент
             }
             average = sum / arr.length; // вычисление ср ариф деления суммы на кол-во элементов
             System.out.println("Среднее арифметическое: " + average);
-        } catch (ArrayIndexOutOfBoundsException e) { // catch - для обработки исключений в блоке try
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Ошибка: выход за границы массива");
-        } catch (NumberFormatException e) { // e - переменная, будет сохранено исключение для дальн использования
+        } catch (NumberFormatException e) {
             System.out.println("Ошибка: неверный формат числа");
         }
     }
