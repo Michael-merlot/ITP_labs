@@ -48,9 +48,9 @@ public class Cafe extends Institution { // указывает, что класс
 // Для этого я создал иерархию классов, представляющих различные типы
 // заведений: кафе, магазины и библиотеки.
 
-// В Institution.java, я объявил абстрактный метод displayInfo() и
+// В Institution.NumberFinder.java, я объявил абстрактный метод displayInfo() и
 // статическую переменную instanceCount для подсчета созданных экземпляров.
-//В Cafe.java, Shop.java и Library.java я переопределил метод displayInfo()
+//В Cafe.NumberFinder.java, Shop.NumberFinder.java и Library.NumberFinder.java я переопределил метод displayInfo()
 // для вывода специфической информации для каждого типа заведения.
 
 // Я использовал абстрактный класс и методы для реализации абстракции.

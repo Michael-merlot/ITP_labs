@@ -1,4 +1,4 @@
-import java.util.LinkedList; // импорт класс LinkedList для пакета java.util
+import java.util.LinkedList; // импорт класс LinkedList для пакета NumberFinder.java.util
 
 public class HashTable<K, V> {
     private class Entry {
