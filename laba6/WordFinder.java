@@ -3,7 +3,7 @@ import java.util.regex.*;
 public class WordFinder {
     public static void main(String[] args) {
         String text = "Apple, apricot, and banana are fruits. Avocado is also a fruit.";
-        char startingLetter = 'A';  // Замените на букву, с которой должны начинаться слова
+        char startingLetter = 'A';  // на букву, с которой должны начинаться слова
 
         // Регулярное выражение для поиска слов, начинающихся с заданной буквы
         String regex = "\\b[" + startingLetter + startingLetter + "]\\w*\\b";
@@ -22,5 +22,3 @@ public class WordFinder {
 //- [" + startingLetter + "]: заданная начальная буква.
 //- \\w*: ноль или больше букв или цифр, следующих за начальной буквой.
 //- \\b: другая граница слова для завершения поиска.
-//Создание объектов Pattern и Matcher: Компилируем регулярное выражение и создаём объект Matcher для поиска совпадений в тексте.
-//Цикл для поиска и вывода слов: Использует метод find() для поиска каждого слова, которое начинается с заданной буквы, и метод group() для вывода найденного слова.

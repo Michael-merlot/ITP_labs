@@ -2,18 +2,18 @@ import java.util.regex.*;
 
 public class IPAddressValidator {
     public static void main(String[] args) {
-        String ipAddress = "192.168.1.1";  // Замените на IP-адрес, который нужно проверить
+        String ipAddress = "192.168.1.1";  // проверить на валидность.
 
-        // Регулярное выражение для проверки IP-адреса
+        // регулярное выражение для проверки IP-адреса от 0 до 255.
         String regex = "^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\\."
                 + "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\\."
                 + "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\\."
                 + "(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$";
 
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(ipAddress);
+        Pattern pattern = Pattern.compile(regex); // компилирует регулярное выражение в объект Pattern.
+        Matcher matcher = pattern.matcher(ipAddress); // будет использоваться для сопоставления IP-адреса с регулярным выражением.
 
-        if (matcher.matches()) {
+        if (matcher.matches()) { // проверяет, соответствует ли адрес регулярному выражению.
             System.out.println("Valid IP address!");
         } else {
             System.out.println("Invalid IP address!");

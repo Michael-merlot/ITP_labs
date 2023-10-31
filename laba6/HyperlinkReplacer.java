@@ -1,16 +1,16 @@
-import java.util.regex.*;
+import java.util.regex.*; // функциональность для работы с регулярными выражениями.
 
 public class HyperlinkReplacer {
     public static void main(String[] args) {
         String text = "Visit our website at http://example.com or follow us on https://twitter.com/example.";
 
         // Регулярное выражение для поиска URL-адресов
-        String regex = "https?://[\\w.-]+(?:/\\S*)?";
+        String regex = "https?://[\\w.-]+(?:/\\S*)?"; // регулярное выражение используется для поиска URL-адресов в тексте.
 
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
+        Pattern pattern = Pattern.compile(regex); //  компилирует регулярное выражение в объект Pattern.
+        Matcher matcher = pattern.matcher(text); // Здесь создается объект Matcher, который будет использоваться для поиска URL-адресов в заданном тексте.
 
-        StringBuffer result = new StringBuffer();
+        StringBuffer result = new StringBuffer(); // для хранения результата с замененными URL-адресами.
 
         while (matcher.find()) {
             // Заменяем найденный URL на гиперссылку
