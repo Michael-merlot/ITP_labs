@@ -1,16 +1,16 @@
 public class MaxElementFinder extends Thread {
-    private int[] row;
-    private int maxElement;
+    private int[] row; // одна строка матрицы.
+    private int maxElement; // для хранения в данной строке.
 
     public MaxElementFinder(int[] row) {
-        this.row = row;
+        this.row = row; // присваивает массив внутреннему row.
     }
 
     public void run() {
-        maxElement = row[0];
+        maxElement = row[0]; // первая строка
         for (int i = 1; i < row.length; i++) {
-            if (row[i] > maxElement) {
-                maxElement = row[i];
+            if (row[i] > maxElement) { // является ли текущий элемент больше
+                maxElement = row[i]; // если текущий элемент больше, обновляем
             }
         }
     }
@@ -27,6 +27,7 @@ public class MaxElementFinder extends Thread {
         };
 
         MaxElementFinder[] finders = new MaxElementFinder[matrix.length];
+// Создается массив finders, который будет хранить потоки для каждой строки матрицы.
 
         // Создаем потоки для каждой строки матрицы
         for (int i = 0; i < matrix.length; i++) {
@@ -37,7 +38,7 @@ public class MaxElementFinder extends Thread {
         // Ожидаем завершения работы всех потоков
         try {
             for (MaxElementFinder finder : finders) {
-                finder.join();
+                finder.join(); // блокирует выполнение основного потока до тех пор, пока не завершатся все потоки finders.
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -45,9 +46,9 @@ public class MaxElementFinder extends Thread {
 
         // Находим наибольший элемент в матрице
         int maxElement = finders[0].getMaxElement();
-        for (int i = 1; i < finders.length; i++) {
+        for (int i = 1; i < finders.length; i++) { // ищет наибольший элемент среди всех строк.
             if (finders[i].getMaxElement() > maxElement) {
-                maxElement = finders[i].getMaxElement();
+                maxElement = finders[i].getMaxElement(); // найден больше в др строке? записываем как новый
             }
         }
 

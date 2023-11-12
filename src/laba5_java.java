@@ -85,7 +85,7 @@ public class laba5_java {
 
     }
 
-// Задание 1
+// Задание 1 Создайте функцию, которая возвращает true, если две строки имеют один и тот же буквенный шаблон, и false в противном случае.
     public static boolean sameLetterPattern(String str1, String str2) {
         if (str1.length() != str2.length()) {
             return false;
@@ -109,7 +109,9 @@ public class laba5_java {
         }
         return true;
     }
-// Задание 2
+// Задание 2 Паутина определяется кольцами, пронумерованными от 0 до 4 от центра, и радиалами, помеченными по часовой стрелке сверху как A-H.
+//Создайте функцию, которая принимает координаты паука и мухи и
+// возвращает кратчайший путь для паука, чтобы добраться до мухи.
 
     public static String spiderVsFly(String spider, String fly) {
         char spiderRadial = spider.charAt(0);
@@ -192,7 +194,8 @@ public class laba5_java {
         }
     }
 
-// Задание 3
+// Задание 3 ⦁	Создайте функцию, которая будет рекурсивно подсчитывать количество цифр числа.
+// Преобразование числа в строку не допускается, поэтому подход является рекурсивным
 public static int digitsCount(long n) {
     // Base case: if the number is between 0 and 9, it has 1 digit
     if (n >= 0 && n <= 9) {
@@ -202,7 +205,8 @@ public static int digitsCount(long n) {
     return 1 + digitsCount(n / 10);
     }
 
-// Задание 4
+// Задание 4 ⦁	Игроки пытаются набрать очки, формируя слова, используя буквы из 6-буквенного скремблированного слова.
+// Они выигрывают раунд, если им удается успешно расшифровать слово из 6 букв.
     public static int totalPoints(String[] guesses, String word) {
         int totalPoints = 0;
         for (String guess : guesses) {
@@ -254,7 +258,8 @@ public static int digitsCount(long n) {
         }
         return 0;
     }
-// Задание 5
+// Задание 5 Создайте функцию, которая получает каждую пару чисел из массива,
+// который суммирует до восьми, и возвращает его как массив пар (отсортированный по возрастанию).
     public static List<List<Integer>> sumsUp(int[] arr) {
         Arrays.sort(arr);
         List<List<Integer>> pairs = new ArrayList<>();
@@ -277,7 +282,9 @@ public static int digitsCount(long n) {
         return pairs;
     }
 
-// Задание 6
+// Задание 6 Какой процент вы можете набрать на тесте, который в одиночку снижает средний балл по классу на 5%?
+// Учитывая массив оценок ваших одноклассников, создайте функцию, которая возвращает ответ.
+// Округлите до ближайшего процента.
 public static String takeDownAverage(String[] scores) {
     // Calculate current average
     double currentAverage = Arrays.stream(scores)
@@ -297,7 +304,8 @@ public static String takeDownAverage(String[] scores) {
     return String.format("%d%%", Math.round(requiredScore));
 }
 
-// Задание 7
+// Задание 7 Создайте функцию, которая будет шифровать и дешифровать сообщения с использованием шифра Цезаря. Шифр Цезаря – это метод шифрования,
+// в котором каждая буква в сообщении сдвигается на фиксированное количество позиций в алфавите.
 public static String caesarCipher(String mode, String message, int shift) {
     StringBuilder result = new StringBuilder();
     // Adjust shift for decoding
@@ -323,7 +331,8 @@ public static String caesarCipher(String mode, String message, int shift) {
     return result.toString();
 }
 
-// Задание 8
+// Задание 8 Создайте метод для рекурсивного вычисления количества различных способов
+// как можно разместить k элементов из множества из n элементов без повторений
 public static int setSetup(int n, int k) {
     return factorial(n) / factorial(n - k);
 }
@@ -335,7 +344,8 @@ public static int setSetup(int n, int k) {
         return n * factorial(n - 1);
     }
 
-// Задание 9
+// Задание 9 В этой задаче цель состоит в том, чтобы вычислить, сколько времени сейчас в двух разных городах.
+// Вы должны вернуть новую метку времени с датой и соответствующим временем
 public static String timeDifference(String cityA, String timestamp, String cityB) {
     DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm", Locale.ENGLISH);
     LocalDateTime localDateTime = LocalDateTime.parse(timestamp, inputFormatter);
@@ -348,7 +358,7 @@ public static String timeDifference(String cityA, String timestamp, String cityB
 }
 
 
-// Задание 10
+// Задание 10 Напишите функцию, которая принимает неотрицательное целое число и возвращает true, если целое число является новым числом, и false, если это не так.
 public static boolean isNew(int num) {
     String numStr = Integer.toString(num);
     char[] digits = numStr.toCharArray();

@@ -1,23 +1,23 @@
-public class ArraySumCalculator extends Thread {
-    private int[] array;
-    private int start;
-    private int end;
-    private int sum;
+public class ArraySumCalculator extends Thread { // может быть запущен как отдельный поток исполнения в программе.
+    private int[] array; // над которым будет производиться операция.
+    private int start; //  нач индекс массива
+    private int end; // кон индекс массива
+    private int sum; // переменная для хранения результата суммирования.
 
     public ArraySumCalculator(int[] array, int start, int end) {
         this.array = array;
-        this.start = start;
-        this.end = end;
+        this.start = start;  // устанавливает начальный индекс.
+        this.end = end; // устанавливает конечный индекс.
     }
 
     public void run() {
         sum = 0;
-        for (int i = start; i < end; i++) {
+        for (int i = start; i < end; i++) { // от start до end
             sum += array[i];
         }
     }
 
-    public int getSum() {
+    public int getSum() { // для получения результата суммирования после выполнения потока.
         return sum;
     }
 
@@ -30,7 +30,7 @@ public class ArraySumCalculator extends Thread {
         ArraySumCalculator thread2 = new ArraySumCalculator(array, mid, array.length);
 
         // Запускаем потоки
-        thread1.start();
+        thread1.start(); // для ожидания завершения потоков
         thread2.start();
 
         // Ожидаем завершение работы потоков
