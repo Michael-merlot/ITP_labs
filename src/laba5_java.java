@@ -10,10 +10,6 @@ import java.time.ZonedDateTime;
 import java.util.Locale;
 
 public class laba5_java {
-
-    private static final double RING_DISTANCE = 1.0;
-    private static final double RADIAL_ANGLE = Math.toRadians(45);
-
     private static final Map<String, String> timeZones = new HashMap<>();
     static {
         timeZones.put("Los Angeles", "-08:00");
@@ -28,6 +24,7 @@ public class laba5_java {
         timeZones.put("Beijing", "+08:00");
         timeZones.put("Canberra", "+10:00");
     }
+
     public static void main(String[] args) {
         System.out.println(sameLetterPattern("ABAB", "CDCD")); // ➞ true
         System.out.println(sameLetterPattern("ABCBA", "BCDCB")); // ➞ true
@@ -85,25 +82,25 @@ public class laba5_java {
 
     }
 
-// Задание 1 Создайте функцию, которая возвращает true, если две строки имеют один и тот же буквенный шаблон, и false в противном случае.
+    // Задание 1 Создайте функцию, которая возвращает true, если две строки имеют один и тот же буквенный шаблон, и false в противном случае.
     public static boolean sameLetterPattern(String str1, String str2) {
         if (str1.length() != str2.length()) {
-            return false;
+            return false; // Если не совпадают,возвращает false
         }
 
-        Map<Character, Character> patternMap = new HashMap<>();
-        for (int i = 0; i < str1.length(); i++) {
+        Map<Character, Character> patternMap = new HashMap<>(); // Создается карта для хранения соответствий между символами первой и второй строки.
+        for (int i = 0; i < str1.length(); i++) { // по каждому символу первой строки.
             char ch1 = str1.charAt(i);
-            char ch2 = str2.charAt(i);
+            char ch2 = str2.charAt(i); // Получение текущих символов обеих строк на позиции i.
 
-            if (patternMap.containsKey(ch1)) {
+            if (patternMap.containsKey(ch1)) { // Если символ из первой строки уже есть в карте, проверяется соответствие его пары символу из второй строки.
                 if (patternMap.get(ch1) != ch2) {
-                    return false;
+                    return false; // не пара не совпадает
                 }
             } else {
                 if (patternMap.containsValue(ch2)) {
                     return false;
-                }
+                } // Если символ из первой строки еще не в карте, проверяется, не сопоставлен ли уже символ из второй строки другому символу. Если нет, пара добавляется в карту.
                 patternMap.put(ch1, ch2);
             }
         }
@@ -113,119 +110,87 @@ public class laba5_java {
 //Создайте функцию, которая принимает координаты паука и мухи и
 // возвращает кратчайший путь для паука, чтобы добраться до мухи.
 
+    private static final String RADIALS = "ABCDEFGH"; // Строка для представления радиалов
+
     public static String spiderVsFly(String spider, String fly) {
-        char spiderRadial = spider.charAt(0);
-        int spiderRing = spider.charAt(1) - '0';
-        char flyRadial = fly.charAt(0);
-        int flyRing = fly.charAt(1) - '0';
+        int spiderRadial = RADIALS.indexOf(spider.charAt(0)); // индекс радиала, на котором находится паук.
+        int spiderRing = Character.getNumericValue(spider.charAt(1)); // Определяется номер кольца, на котором находится паук
+        int flyRadial = RADIALS.indexOf(fly.charAt(0)); // определяется индекс радиала для мухи.
+        int flyRing = Character.getNumericValue(fly.charAt(1)); // Определяется номер кольца для мухи
 
+        StringBuilder path = new StringBuilder(spider); // начальная позиция паука
+
+        // Если паук и муха находятся на одном радиале
         if (spiderRadial == flyRadial) {
-            // Move along the radial
-            return moveAlongRadial(spider, fly, spiderRing, flyRing);
-        } else if (spiderRing == flyRing) {
-            // Move along the ring
-            return moveAlongRing(spider, fly);
-        } else {
-            // Calculate the two possible paths and choose the shorter one
-            String pathViaCenter = moveAlongRadial(spider, String.valueOf(spiderRadial) + '0', spiderRing, 0) +
-                    moveAlongRadial(String.valueOf(flyRadial) + '0', fly, 0, flyRing);
-            String pathViaRing = moveAlongRing(spider, String.valueOf(spiderRadial) + flyRing) +
-                    moveAlongRadial(String.valueOf(spiderRadial) + flyRing, fly, flyRing, flyRing);
-
-            double distanceViaCenter = calculateDistance(spider, String.valueOf(spiderRadial) + '0') +
-                    calculateDistance(String.valueOf(flyRadial) + '0', fly);
-            double distanceViaRing = calculateDistance(spider, String.valueOf(spiderRadial) + flyRing) +
-                    calculateDistance(String.valueOf(spiderRadial) + flyRing, fly);
-
-            return distanceViaCenter <= distanceViaRing ? pathViaCenter : pathViaRing;
-        }
-    }
-
-    private static String moveAlongRadial(String start, String end, int startRing, int endRing) {
-        StringBuilder path = new StringBuilder(start);
-        if (startRing > endRing) {
-            for (int i = startRing - 1; i >= endRing; i--) {
-                path.append("-").append(start.charAt(0)).append(i);
+            for (int i = spiderRing - 1; i >= flyRing; i--) {
+                path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
             }
-        } else {
-            for (int i = startRing + 1; i <= endRing; i++) {
-                path.append("-").append(start.charAt(0)).append(i);
+        } else { // Если паук и муха находятся на разных радиалах
+            int angleDistance = Math.min(Math.abs(spiderRadial - flyRadial), RADIALS.length() - Math.abs(spiderRadial - flyRadial));
+            // Вычисляется кратчайшее угловое расстояние между радиалами паука и мухи.
+            if (angleDistance < 3 || spiderRing == 0 || flyRing == 0) {
+                // Спускаемся или поднимаемся по кольцам
+                int ringChange = spiderRing > flyRing ? -1 : 1;
+                for (int ring = spiderRing; ring != flyRing; ring += ringChange) {
+                    path.append("-").append(RADIALS.charAt(spiderRadial)).append(ring + ringChange);
+                }
+                // Перемещаемся по кольцу к нужному радиалу
+                int radialChange = spiderRadial < flyRadial ? 1 : -1;
+                if (Math.abs(spiderRadial - flyRadial) > RADIALS.length() / 2) {
+                    radialChange = -radialChange; // Если короче идти в другую сторону
+                }
+                for (int radial = spiderRadial; radial != flyRadial; radial = (radial + radialChange + RADIALS.length()) % RADIALS.length()) {
+                    path.append("-").append(RADIALS.charAt((radial + radialChange + RADIALS.length()) % RADIALS.length())).append(flyRing);
+                }
+            } else {
+                // Спускаемся в центр
+                for (int i = spiderRing; i > 0; i--) {
+                    path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
+                }
+                // Перемещаемся по центру к нужному радиалу
+                path.append("-A0");
+                for (int i = 1; i <= flyRing; i++) {
+                    path.append("-").append(RADIALS.charAt(flyRadial)).append(i);
+                }
             }
         }
+        // Возвращаем путь как строку
         return path.toString();
     }
 
-    private static String moveAlongRing(String start, String end) {
-        char startRadial = start.charAt(0);
-        char endRadial = end.charAt(0);
-        int ring = start.charAt(1) - '0';
 
-        int startRadialIndex = startRadial - 'A';
-        int endRadialIndex = endRadial - 'A';
-
-        StringBuilder path = new StringBuilder(start);
-        int steps = Math.min(Math.abs(endRadialIndex - startRadialIndex), 8 - Math.abs(endRadialIndex - startRadialIndex));
-        int direction = (endRadialIndex - startRadialIndex + 8) % 8 > 4 ? -1 : 1;
-
-        for (int i = 1; i <= steps; i++) {
-            int radialIndex = (startRadialIndex + direction * i + 8) % 8;
-            char radial = (char) ('A' + radialIndex);
-            path.append("-").append(radial).append(ring);
-        }
-
-        return path.toString();
-    }
-
-    private static double calculateDistance(String start, String end) {
-        char startRadial = start.charAt(0);
-        int startRing = start.charAt(1) - '0';
-        char endRadial = end.charAt(0);
-        int endRing = end.charAt(1) - '0';
-
-        if (startRing == 0 || endRing == 0) {
-            // One of the points is at the center
-            return Math.abs(startRing - endRing) * RING_DISTANCE;
-        } else {
-            // Both points are on the web
-            int radialDiff = Math.abs(startRadial - endRadial);
-            radialDiff = Math.min(radialDiff, 8 - radialDiff); // Shortest way around the web
-            double angleDifference = radialDiff * RADIAL_ANGLE;
-            return Math.sqrt(Math.pow(startRing, 2) + Math.pow(endRing, 2) - 2 * startRing * endRing * Math.cos(angleDifference));
-        }
-    }
-
-// Задание 3 ⦁	Создайте функцию, которая будет рекурсивно подсчитывать количество цифр числа.
+    // Задание 3 ⦁	Создайте функцию, которая будет рекурсивно подсчитывать количество цифр числа.
 // Преобразование числа в строку не допускается, поэтому подход является рекурсивным
-public static int digitsCount(long n) {
-    // Base case: if the number is between 0 and 9, it has 1 digit
-    if (n >= 0 && n <= 9) {
-        return 1;
-    }
-    // Recursive case: remove the last digit and add 1 to the count
-    return 1 + digitsCount(n / 10);
+    public static int digitsCount(long n) {
+
+        if (n >= 0 && n <= 9) { // Это базовый случай рекурсии
+            return 1;
+        }
+
+        return 1 + digitsCount(n / 10); // Это рекурсивный случай.
     }
 
-// Задание 4 ⦁	Игроки пытаются набрать очки, формируя слова, используя буквы из 6-буквенного скремблированного слова.
+    // Задание 4 ⦁	Игроки пытаются набрать очки, формируя слова, используя буквы из 6-буквенного скремблированного слова.
 // Они выигрывают раунд, если им удается успешно расшифровать слово из 6 букв.
     public static int totalPoints(String[] guesses, String word) {
-        int totalPoints = 0;
-        for (String guess : guesses) {
-            if (isValidWord(guess, word)) {
+        int totalPoints = 0; // для хранения общего количества очков.
+        for (String guess : guesses) { // перебирает все догадки в массиве guesses.
+            if (isValidWord(guess, word)) { // является ли текущая догадка guess допустимым словом
                 totalPoints += getWordPoints(guess, word);
             }
         }
-        return totalPoints;
+        return totalPoints; // общее кол-во очков
     }
 
     private static boolean isValidWord(String guess, String word) {
-        Map<Character, Integer> letterCounts = new HashMap<>();
+        Map<Character, Integer> letterCounts = new HashMap<>(); // Создается карта для подсчета количества каждой буквы в исходном слове.
         for (char c : word.toCharArray()) {
             letterCounts.put(c, letterCounts.getOrDefault(c, 0) + 1);
-        }
+        } // заполняет карту letterCounts, подсчитывая количество каждой буквы в слове word.
 
-        for (char c : guess.toCharArray()) {
+        for (char c : guess.toCharArray()) { // каждую букву
             if (!letterCounts.containsKey(c) || letterCounts.get(c) == 0) {
-                return false;
+                return false; // если нет или равна нулю
             }
             letterCounts.put(c, letterCounts.get(c) - 1);
         }
@@ -238,134 +203,145 @@ public static int digitsCount(long n) {
         } else if (guess.length() == 4) {
             return 2;
         } else if (guess.length() == 5) {
-            return 3;
+            return 3; // В зависимости от длины догадки возвращаются различные количество очков.
         } else if (guess.length() == 6) {
             if (guess.equals(word)) {
-                return 54; // 4 points + 50 points bonus
+                return 54; // Возвращается 54 очка за точное совпадение или анаграмму исходного слова, иначе возвращается 0 очков.
             }
             // Check for anagrams
-            Map<Character, Integer> guessCounts = new HashMap<>();
-            Map<Character, Integer> wordCounts = new HashMap<>();
+            Map<Character, Integer> guessCounts = new HashMap<>(); // для хранения количества каждой буквы
+            Map<Character, Integer> wordCounts = new HashMap<>(); // для хранения количества каждой буквы
             for (char c : guess.toCharArray()) {
                 guessCounts.put(c, guessCounts.getOrDefault(c, 0) + 1);
-            }
+            } // не было то 0
             for (char c : word.toCharArray()) {
                 wordCounts.put(c, wordCounts.getOrDefault(c, 0) + 1);
             }
             if (guessCounts.equals(wordCounts)) {
-                return 54; // 4 points + 50 points bonus for anagrams
+                return 54; // если гуес является ворд то 54 очка
             }
         }
         return 0;
     }
-// Задание 5 Создайте функцию, которая получает каждую пару чисел из массива,
+
+    // Задание 5 Создайте функцию, которая получает каждую пару чисел из массива,
 // который суммирует до восьми, и возвращает его как массив пар (отсортированный по возрастанию).
     public static List<List<Integer>> sumsUp(int[] arr) {
-        Arrays.sort(arr);
-        List<List<Integer>> pairs = new ArrayList<>();
-        int left = 0;
-        int right = arr.length - 1;
+        Arrays.sort(arr); // по возрастанию. Это упрощает последующий поиск пар, сумма которых равна 8.
+        List<List<Integer>> pairs = new ArrayList<>(); // для хранения найденных пар чисел.
+        int left = 0; // начало массива
+        int right = arr.length - 1; // конец массива
 
-        while (left < right) {
+        while (left < right) { // пока не пересекутся
             int sum = arr[left] + arr[right];
             if (sum == 8) {
                 pairs.add(Arrays.asList(arr[left], arr[right]));
                 left++;
-                right--;
-            } else if (sum < 8) {
+                right--; // если равна 8 то указатели сдвигаются внутрь массива
+            } else if (sum < 8) { // указатель влево для уменьшений суммы
                 left++;
             } else {
                 right--;
             }
         }
 
-        return pairs;
+        return pairs; // в сумме дают 8
     }
 
-// Задание 6 Какой процент вы можете набрать на тесте, который в одиночку снижает средний балл по классу на 5%?
+    // Задание 6 Какой процент вы можете набрать на тесте, который в одиночку снижает средний балл по классу на 5%?
 // Учитывая массив оценок ваших одноклассников, создайте функцию, которая возвращает ответ.
 // Округлите до ближайшего процента.
-public static String takeDownAverage(String[] scores) {
-    // Calculate current average
-    double currentAverage = Arrays.stream(scores)
-            .mapToInt(score -> Integer.parseInt(score.replace("%", "")))
-            .average()
-            .orElse(0);
+    public static String takeDownAverage(String[] scores) {
+        // преобразует массив строк в поток, удаляет символы процента, преобразует оставшиеся значения в числа,
+        // вычисляет среднее и возвращает его. Если массив пуст, возвращается 0.
+        double currentAverage = Arrays.stream(scores)
+                .mapToInt(score -> Integer.parseInt(score.replace("%", "")))
+                .average()
+                .orElse(0);
 
-    // New average after decreasing by 5%
-    double newAverage = currentAverage - 5;
+        //  Вычитается 5% из текущего среднего, чтобы получить новое среднее.
+        double newAverage = currentAverage - 5;
 
-    // Calculate the score to achieve this new average
-    int n = scores.length;
-    double requiredScore = newAverage * (n + 1) - currentAverage * n;
+        //  количество текущих оценок.
+        int n = scores.length;
+        double requiredScore = newAverage * (n + 1) - currentAverage * n; // требуемый балл
 
-    // Round to nearest percent and format as string
-    requiredScore = Math.max(0, requiredScore); // Score can't be negative
-    return String.format("%d%%", Math.round(requiredScore));
-}
+        // результат не будет отрицательным.
+        requiredScore = Math.max(0, requiredScore); // Округляется до ближайшего целого числа и форматируется как строка с процентом.
+        return String.format("%d%%", Math.round(requiredScore));
+    }
 
-// Задание 7 Создайте функцию, которая будет шифровать и дешифровать сообщения с использованием шифра Цезаря. Шифр Цезаря – это метод шифрования,
+    // Задание 7 Создайте функцию, которая будет шифровать и дешифровать сообщения с использованием шифра Цезаря. Шифр Цезаря – это метод шифрования,
 // в котором каждая буква в сообщении сдвигается на фиксированное количество позиций в алфавите.
-public static String caesarCipher(String mode, String message, int shift) {
-    StringBuilder result = new StringBuilder();
-    // Adjust shift for decoding
-    if (mode.equals("decode")) {
-        shift = 26 - (shift % 26);
-    }
-
-    for (char character : message.toCharArray()) {
-        if (character >= 'A' && character <= 'Z') {
-            // Shift character within the bounds of uppercase letters
-            char shiftedChar = (char) ((character - 'A' + shift) % 26 + 'A');
-            result.append(shiftedChar);
-        } else if (character >= 'a' && character <= 'z') {
-            // Convert to uppercase and shift
-            char shiftedChar = (char) (((character - 'a') + shift) % 26 + 'A');
-            result.append(shiftedChar);
-        } else {
-            // Leave non-alphabetical characters unchanged
-            result.append(character);
+    public static String caesarCipher(String mode, String message, int shift) {
+        StringBuilder result = new StringBuilder(); // для эффективного построения результата.
+        if (mode.equals("decode")) { // если декод - возвращаться назад по алфавиту.
+            shift = 26 - (shift % 26);
         }
+
+        for (char character : message.toCharArray()) { // обходит каждый символ в сообщении.
+            if (character >= 'A' && character <= 'Z') { // Если символ - заглавная буква, он сдвигается в пределах алфавита.
+                char shiftedChar = (char) ((character - 'A' + shift) % 26 + 'A');
+                result.append(shiftedChar); // Вычисляется сдвинутый символ для заглавных букв.
+            } else if (character >= 'a' && character <= 'z') { // Если символ - строчная буква, он преобразуется в заглавную и сдвигается.
+                char shiftedChar = (char) (((character - 'a') + shift) % 26 + 'A');
+                result.append(shiftedChar); // Вычисляется сдвинутый символ для строчных букв, который также преобразуется в заглавную букву.
+            } else {
+                result.append(character); // В обоих случаях сдвинутый символ добавляется к результату.
+            } // Если символ не является буквой алфавита, он добавляется к результату без изменений.
+        }
+
+        return result.toString();
     }
 
-    return result.toString();
-}
-
-// Задание 8 Создайте метод для рекурсивного вычисления количества различных способов
+    // Задание 8 Создайте метод для рекурсивного вычисления количества различных способов
 // как можно разместить k элементов из множества из n элементов без повторений
-public static int setSetup(int n, int k) {
-    return factorial(n) / factorial(n - k);
-}
+    public static int setSetup(int n, int k) {
+        return factorial(n) / factorial(n - k); // результат деления факториала n на факториал n-k
+    }
 
     private static int factorial(int n) {
         if (n == 0 || n == 1) {
             return 1;
         }
-        return n * factorial(n - 1);
+        return n * factorial(n - 1); // n! = n * (n-1)!
     }
 
-// Задание 9 В этой задаче цель состоит в том, чтобы вычислить, сколько времени сейчас в двух разных городах.
+    // Задание 9 В этой задаче цель состоит в том, чтобы вычислить, сколько времени сейчас в двух разных городах.
 // Вы должны вернуть новую метку времени с датой и соответствующим временем
-public static String timeDifference(String cityA, String timestamp, String cityB) {
-    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm", Locale.ENGLISH);
-    LocalDateTime localDateTime = LocalDateTime.parse(timestamp, inputFormatter);
+    public static String timeDifference(String cityA, String timestamp, String cityB) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm", Locale.ENGLISH); // Создается объект DateTimeFormatter для парсинга строковой временной метки.
+        LocalDateTime localDateTime = LocalDateTime.parse(timestamp, inputFormatter); // Исходная временная метка преобразуется в объект LocalDateTime.
 
-    ZonedDateTime zonedDateTimeA = ZonedDateTime.of(localDateTime, ZoneOffset.of(timeZones.get(cityA)));
-    ZonedDateTime zonedDateTimeB = zonedDateTimeA.withZoneSameInstant(ZoneOffset.of(timeZones.get(cityB)));
+        ZonedDateTime zonedDateTimeA = ZonedDateTime.of(localDateTime, ZoneOffset.of(timeZones.get(cityA))); //  Преобразуется LocalDateTime в ZonedDateTime, используя часовой пояс первого города.
+        ZonedDateTime zonedDateTimeB = zonedDateTimeA.withZoneSameInstant(ZoneOffset.of(timeZones.get(cityB))); // для первого города преобразуется в ZonedDateTime для второго города, сохраняя тот же момент времени.
 
-    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
-    return zonedDateTimeB.format(outputFormatter);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm"); // Создается новый DateTimeFormatter для вывода результата.
+        return zonedDateTimeB.format(outputFormatter);
+    }
+
+
+    // Задание 10 Напишите функцию, которая принимает неотрицательное целое число и возвращает true, если целое число является новым числом, и false, если это не так.
+    public static boolean isNew(int number) {
+        if (number < 10) {
+            return true; // оно автоматически считается "новым числом".
+        }
+
+        String numberStr = Integer.toString(number); // Число преобразуется в строку.
+        char[] numberChars = numberStr.toCharArray(); // Строка преобразуется в массив символов.
+        Arrays.sort(numberChars); // Массив символов сортируется.
+
+        for (int i = 1; i < number; i++) { // перебирает все числа меньше заданного number.
+            String smallerNumberStr = Integer.toString(i);
+            char[] smallerNumberChars = smallerNumberStr.toCharArray();
+            Arrays.sort(smallerNumberChars); // каждое число преобразуется в отсортированный массив символов
+
+            if (Arrays.equals(numberChars, smallerNumberChars)) {
+                return false; // Найдено меньшее число с теми же цифрами
+            }
+        }
+
+        return true; // Новое число
+    }
 }
 
-
-// Задание 10 Напишите функцию, которая принимает неотрицательное целое число и возвращает true, если целое число является новым числом, и false, если это не так.
-public static boolean isNew(int num) {
-    String numStr = Integer.toString(num);
-    char[] digits = numStr.toCharArray();
-    Arrays.sort(digits);
-    String sortedStr = new String(digits);
-
-    // Check if the sorted number is the same as the original or starts with a zero
-    return sortedStr.equals(numStr) || sortedStr.charAt(0) != '0';
-}
-}
