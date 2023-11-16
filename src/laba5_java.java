@@ -85,22 +85,22 @@ public class laba5_java {
     // Задание 1 Создайте функцию, которая возвращает true, если две строки имеют один и тот же буквенный шаблон, и false в противном случае.
     public static boolean sameLetterPattern(String str1, String str2) {
         if (str1.length() != str2.length()) {
-            return false; // Если не совпадают,возвращает false
+            return false;
         }
 
-        Map<Character, Character> patternMap = new HashMap<>(); // Создается карта для хранения символов первой и второй строки.
-        for (int i = 0; i < str1.length(); i++) { // по каждому символу первой строки.
+        Map<Character, Character> patternMap = new HashMap<>();
+        for (int i = 0; i < str1.length(); i++) {
             char ch1 = str1.charAt(i);
-            char ch2 = str2.charAt(i); // Получение текущих символов обеих строк на позиции i.
+            char ch2 = str2.charAt(i);
 
-            if (patternMap.containsKey(ch1)) { // Если символ из первой строки уже есть в карте, проверяется соответствие его пары символу из второй строки.
+            if (patternMap.containsKey(ch1)) {
                 if (patternMap.get(ch1) != ch2) {
-                    return false; // не пара не совпадает
+                    return false;
                 }
             } else {
                 if (patternMap.containsValue(ch2)) {
                     return false;
-                } // Если символ из первой строки еще не в карте, проверяется, не сопоставлен ли уже символ из второй строки другому символу. Если нет, пара добавляется в карту.
+                }
                 patternMap.put(ch1, ch2);
             }
         }
@@ -110,51 +110,48 @@ public class laba5_java {
 //Создайте функцию, которая принимает координаты паука и мухи и
 // возвращает кратчайший путь для паука, чтобы добраться до мухи.
 
-    private static final String RADIALS = "ABCDEFGH"; // Строка для представления радиалов
-// final - иниц один раз и класс не может быть унаследован
+    private static final String RADIALS = "ABCDEFGH";
     public static String spiderVsFly(String spider, String fly) {
-        int spiderRadial = RADIALS.indexOf(spider.charAt(0)); // индекс радиала, на котором находится паук.
-        int spiderRing = Character.getNumericValue(spider.charAt(1)); // Определяется номер кольца, на котором находится паук
-        int flyRadial = RADIALS.indexOf(fly.charAt(0)); // определяется индекс радиала для мухи.
-        int flyRing = Character.getNumericValue(fly.charAt(1)); // Определяется номер кольца для мухи
+        int spiderRadial = RADIALS.indexOf(spider.charAt(0));
+        int spiderRing = Character.getNumericValue(spider.charAt(1));
+        int flyRadial = RADIALS.indexOf(fly.charAt(0));
+        int flyRing = Character.getNumericValue(fly.charAt(1));
 
-        StringBuilder path = new StringBuilder(spider); // начальная позиция паука
-
-        // Если паук и муха находятся на одном радиале
+        StringBuilder path = new StringBuilder(spider);
+        // блок 1
         if (spiderRadial == flyRadial) {
             for (int i = spiderRing - 1; i >= flyRing; i--) {
                 path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
             }
-        } else { // Если паук и муха находятся на разных радиалах
+        } else {
             int angleDistance = Math.min(Math.abs(spiderRadial - flyRadial), RADIALS.length() - Math.abs(spiderRadial - flyRadial));
-            // Вычисляется кратчайшее угловое расстояние между радиалами паука и мухи.
+            // блок 2
             if (angleDistance < 3 || spiderRing == 0 || flyRing == 0) {
-                // Спускаемся или поднимаемся по кольцам (true- -1, false - 1)
+                // блок 3
                 int ringChange = spiderRing > flyRing ? -1 : 1;
                 for (int ring = spiderRing; ring != flyRing; ring += ringChange) {
                     path.append("-").append(RADIALS.charAt(spiderRadial)).append(ring + ringChange);
                 }
-                // Перемещаемся по кольцу к нужному радиалу
+                // блок 4
                 int radialChange = spiderRadial < flyRadial ? 1 : -1;
                 if (Math.abs(spiderRadial - flyRadial) > RADIALS.length() / 2) {
-                    radialChange = -radialChange; // Если короче идти в другую сторону
+                    radialChange = -radialChange;
                 }
                 for (int radial = spiderRadial; radial != flyRadial; radial = (radial + radialChange + RADIALS.length()) % RADIALS.length()) {
                     path.append("-").append(RADIALS.charAt((radial + radialChange + RADIALS.length()) % RADIALS.length())).append(flyRing);
                 }
             } else {
-                // Спускаемся в центр
+                // блок 5
                 for (int i = spiderRing; i > 0; i--) {
                     path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
                 }
-                // Перемещаемся по центру к нужному радиалу
+                // блок 6
                 path.append("-A0");
                 for (int i = 1; i <= flyRing; i++) {
                     path.append("-").append(RADIALS.charAt(flyRadial)).append(i);
                 }
             }
         }
-        // Возвращаем путь как строку
         return path.toString();
     }
 
@@ -163,36 +160,36 @@ public class laba5_java {
 // Преобразование числа в строку не допускается, поэтому подход является рекурсивным
     public static int digitsCount(long n) {
 
-        if (n >= 0 && n <= 9) { // Это базовый случай рекурсии, от 0 до 9
+        if (n >= 0 && n <= 9) {
             return 1;
         }
 
-        return 1 + digitsCount(n / 10); // Это рекурсивный случай.
+        return 1 + digitsCount(n / 10);
     }
 
     // Задание 4 ⦁	Игроки пытаются набрать очки, формируя слова, используя буквы из 6-буквенного скремблированного слова.
 // Они выигрывают раунд, если им удается успешно расшифровать слово из 6 букв.
     public static int totalPoints(String[] guesses, String word) {
-        int totalPoints = 0; // для хранения общего количества очков.
-        for (String guess : guesses) { // перебирает все догадки в массиве guesses.
-            if (isValidWord(guess, word)) { // является ли текущая догадка guess допустимым словом
+        int totalPoints = 0;
+        for (String guess : guesses) {
+            if (isValidWord(guess, word)) {
                 totalPoints += getWordPoints(guess, word);
             }
         }
-        return totalPoints; // общее кол-во очков
+        return totalPoints;
     }
 
     private static boolean isValidWord(String guess, String word) {
-        Map<Character, Integer> letterCounts = new HashMap<>(); // Создается карта для подсчета количества каждой буквы в исходном слове.
-        for (char c : word.toCharArray()) { // каждую букву в ворд
+        Map<Character, Integer> letterCounts = new HashMap<>();
+        for (char c : word.toCharArray()) {
             letterCounts.put(c, letterCounts.getOrDefault(c, 0) + 1);
-        } // заполняет карту letterCounts, подсчитывая количество каждой буквы в слове word.
+        }
 
-        for (char c : guess.toCharArray()) { // каждую букву
+        for (char c : guess.toCharArray()) {
             if (!letterCounts.containsKey(c) || letterCounts.get(c) == 0) {
-                return false; // если нет буквы в ворд или равна нулю
+                return false;
             }
-            letterCounts.put(c, letterCounts.get(c) - 1); // обновление карты леттеркаунтс хранит кол-во каждый буквы ворд
+            letterCounts.put(c, letterCounts.get(c) - 1);
         }
         return true;
     }
@@ -203,22 +200,22 @@ public class laba5_java {
         } else if (guess.length() == 4) {
             return 2;
         } else if (guess.length() == 5) {
-            return 3; // В зависимости от длины возвращаются различные количество очков.
+            return 3;
         } else if (guess.length() == 6) {
-            if (guess.equals(word)) { // если гуес=ворд то 54 очка
-                return 54; // Возвращается 54 очка за точное совпадение иначе возвращается 0 очков.
+            if (guess.equals(word)) {
+                return 54; // возврат 54 очка за точное совпадение
             }
 
-            Map<Character, Integer> guessCounts = new HashMap<>(); // для хранения количества каждой буквы
-            Map<Character, Integer> wordCounts = new HashMap<>(); // для хранения количества каждой буквы
+            Map<Character, Integer> guessCounts = new HashMap<>();
+            Map<Character, Integer> wordCounts = new HashMap<>();
             for (char c : guess.toCharArray()) {
                 guessCounts.put(c, guessCounts.getOrDefault(c, 0) + 1);
-            } // каждая буква в карту гуес-каунтс, если буква есть в карте то кол-во на +1
+            }
             for (char c : word.toCharArray()) {
                 wordCounts.put(c, wordCounts.getOrDefault(c, 0) + 1);
             }
             if (guessCounts.equals(wordCounts)) {
-                return 54; // если гуес является ворд то 54 очка (за анаграму)
+                return 54;
             }
         }
         return 0;
@@ -227,18 +224,18 @@ public class laba5_java {
     // Задание 5 Создайте функцию, которая получает каждую пару чисел из массива,
 // который суммирует до восьми, и возвращает его как массив пар (отсортированный по возрастанию).
     public static List<List<Integer>> sumsUp(int[] arr) {
-        Arrays.sort(arr); // по возрастанию. Это упрощает последующий поиск пар, сумма которых равна 8.
-        List<List<Integer>> pairs = new ArrayList<>(); // для хранения найденных пар чисел.
-        int left = 0; // начало массива
-        int right = arr.length - 1; // конец массива
+        Arrays.sort(arr);
+        List<List<Integer>> pairs = new ArrayList<>();
+        int left = 0;
+        int right = arr.length - 1;
 
-        while (left < right) { // пока не пересекутся
+        while (left < right) {
             int sum = arr[left] + arr[right];
             if (sum == 8) {
                 pairs.add(Arrays.asList(arr[left], arr[right]));
                 left++;
-                right--; // если равна 8 то указатели сдвигаются внутрь массива
-            } else if (sum < 8) { // указатель влево для уменьшений суммы
+                right--;
+            } else if (sum < 8) {
                 left++;
             } else {
                 right--;
@@ -252,44 +249,38 @@ public class laba5_java {
 // Учитывая массив оценок ваших одноклассников, создайте функцию, которая возвращает ответ.
 // Округлите до ближайшего процента.
     public static String takeDownAverage(String[] scores) {
-        // преобразует массив строк в поток, удаляет символы процента, преобразует оставшиеся значения в числа,
-        // вычисляет среднее и возвращает его. Если массив пуст, возвращается 0.
         double currentAverage = Arrays.stream(scores)
                 .mapToInt(score -> Integer.parseInt(score.replace("%", "")))
                 .average()
                 .orElse(0);
 
-        //  Вычитается 5% из текущего среднего, чтобы получить новое среднее.
         double newAverage = currentAverage - 5;
 
-        //  количество текущих оценок.
         int n = scores.length;
         double requiredScore = newAverage * (n + 1) - currentAverage * n; // требуемый балл
 
-        // результат не будет отрицательным.
-        requiredScore = Math.max(0, requiredScore); // Округляется до ближайшего целого числа и форматируется как строка с процентом.
+        requiredScore = Math.max(0, requiredScore);
         return String.format("%d%%", Math.round(requiredScore));
-    } // %d - инт (%% - для вставски символа процента в строку)
-    // math.round - используется для округления числа с плавающей точкой
+    }
 
     // Задание 7 Создайте функцию, которая будет шифровать и дешифровать сообщения с использованием шифра Цезаря. Шифр Цезаря – это метод шифрования,
 // в котором каждая буква в сообщении сдвигается на фиксированное количество позиций в алфавите.
     public static String caesarCipher(String mode, String message, int shift) {
-        StringBuilder result = new StringBuilder(); // для эффективного построения результата.
-        if (mode.equals("decode")) { // если декод - возвращаться назад по алфавиту.
+        StringBuilder result = new StringBuilder();
+        if (mode.equals("decode")) {
             shift = 26 - (shift % 26);
         }
 
-        for (char character : message.toCharArray()) { // обходит каждый символ в сообщении.
-            if (character >= 'A' && character <= 'Z') { // Если символ - заглавная буква, он сдвигается в пределах алфавита.
+        for (char character : message.toCharArray()) {
+            if (character >= 'A' && character <= 'Z') {
                 char shiftedChar = (char) ((character - 'A' + shift) % 26 + 'A');
-                result.append(shiftedChar); // Вычисляется сдвинутый символ для заглавных букв.
-            } else if (character >= 'a' && character <= 'z') { // Если символ - строчная буква, он преобразуется в заглавную и сдвигается.
+                result.append(shiftedChar);
+            } else if (character >= 'a' && character <= 'z') {
                 char shiftedChar = (char) (((character - 'a') + shift) % 26 + 'A');
-                result.append(shiftedChar); // Вычисляется сдвинутый символ для строчных букв, который также преобразуется в заглавную букву.
+                result.append(shiftedChar);
             } else {
-                result.append(character); // В обоих случаях сдвинутый символ добавляется к результату.
-            } // Если символ не является буквой алфавита, он добавляется к результату без изменений.
+                result.append(character);
+            }
         }
 
         return result.toString();
@@ -298,7 +289,7 @@ public class laba5_java {
     // Задание 8 Создайте метод для рекурсивного вычисления количества различных способов
 // как можно разместить k элементов из множества из n элементов без повторений
     public static int setSetup(int n, int k) {
-        return factorial(n) / factorial(n - k); // результат деления факториала n на факториал n-k
+        return factorial(n) / factorial(n - k); // результат деления
     }
 
     private static int factorial(int n) {
@@ -311,38 +302,38 @@ public class laba5_java {
     // Задание 9 В этой задаче цель состоит в том, чтобы вычислить, сколько времени сейчас в двух разных городах.
 // Вы должны вернуть новую метку времени с датой и соответствующим временем
     public static String timeDifference(String cityA, String timestamp, String cityB) {
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm", Locale.ENGLISH); // Создается объект DateTimeFormatter для парсинга строковой временной метки.
-        LocalDateTime localDateTime = LocalDateTime.parse(timestamp, inputFormatter); // Исходная временная метка преобразуется в объект LocalDateTime.
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm", Locale.ENGLISH);
+        LocalDateTime localDateTime = LocalDateTime.parse(timestamp, inputFormatter);
 
-        ZonedDateTime zonedDateTimeA = ZonedDateTime.of(localDateTime, ZoneOffset.of(timeZones.get(cityA))); //  Преобразуется LocalDateTime в ZonedDateTime, используя часовой пояс первого города.
-        ZonedDateTime zonedDateTimeB = zonedDateTimeA.withZoneSameInstant(ZoneOffset.of(timeZones.get(cityB))); // для первого города преобразуется в ZonedDateTime для второго города, сохраняя тот же момент времени.
+        ZonedDateTime zonedDateTimeA = ZonedDateTime.of(localDateTime, ZoneOffset.of(timeZones.get(cityA)));
+        ZonedDateTime zonedDateTimeB = zonedDateTimeA.withZoneSameInstant(ZoneOffset.of(timeZones.get(cityB)));
 
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm"); // Создается новый DateTimeFormatter для вывода результата.
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
         return zonedDateTimeB.format(outputFormatter);
-    } // ofPattern для создания форматтера даты с шаблоном
+    }
 
 
     // Задание 10 Напишите функцию, которая принимает неотрицательное целое число и возвращает true, если целое число является новым числом, и false, если это не так.
     public static boolean isNew(int number) {
         if (number < 10) {
-            return true; // оно автоматически считается "новым числом".
+            return true; // оно автоматически считается "новым числом"
         }
 
-        String numberStr = Integer.toString(number); // Число преобразуется в строку.
-        char[] numberChars = numberStr.toCharArray(); // Строка преобразуется в массив символов.
-        Arrays.sort(numberChars); // Массив символов сортируется.
+        String numberStr = Integer.toString(number);
+        char[] numberChars = numberStr.toCharArray();
+        Arrays.sort(numberChars);
 
-        for (int i = 1; i < number; i++) { // перебирает все числа меньше заданного number.
+        for (int i = 1; i < number; i++) {
             String smallerNumberStr = Integer.toString(i);
             char[] smallerNumberChars = smallerNumberStr.toCharArray();
-            Arrays.sort(smallerNumberChars); // каждое число преобразуется в отсортированный массив символов
+            Arrays.sort(smallerNumberChars);
 
             if (Arrays.equals(numberChars, smallerNumberChars)) {
-                return false; // Найдено меньшее число с теми же цифрами
+                return false;
             }
         }
 
-        return true; // Новое число
+        return true; // новое число
     }
 }
 
