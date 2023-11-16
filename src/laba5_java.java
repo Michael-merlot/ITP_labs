@@ -118,15 +118,24 @@ public class laba5_java {
         int flyRing = Character.getNumericValue(fly.charAt(1));
 
         StringBuilder path = new StringBuilder(spider);
+
+        int angleDistance = Math.min(Math.abs(spiderRadial - flyRadial), RADIALS.length() - Math.abs(spiderRadial - flyRadial));
         // блок 1
-        if (spiderRadial == flyRadial) {
-            for (int i = spiderRing - 1; i >= flyRing; i--) {
+        if (angleDistance >= 3 || spiderRing == 0 || flyRing == 0) {
+            for (int i = spiderRing - 1; i > 0; i--) {
                 path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
             }
+            path.append("-A0");
+            for (int i = 1; i <= flyRing; i++) {
+                path.append("-").append(RADIALS.charAt(flyRadial)).append(i);
+            }
         } else {
-            int angleDistance = Math.min(Math.abs(spiderRadial - flyRadial), RADIALS.length() - Math.abs(spiderRadial - flyRadial));
             // блок 2
-            if (angleDistance < 3 || spiderRing == 0 || flyRing == 0) {
+            if (spiderRadial == flyRadial) {
+                for (int i = spiderRing - 1; i >= flyRing; i--) {
+                    path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
+                }
+            } else {
                 // блок 3
                 int ringChange = spiderRing > flyRing ? -1 : 1;
                 for (int ring = spiderRing; ring != flyRing; ring += ringChange) {
@@ -137,18 +146,9 @@ public class laba5_java {
                 if (Math.abs(spiderRadial - flyRadial) > RADIALS.length() / 2) {
                     radialChange = -radialChange;
                 }
+                // блок 5
                 for (int radial = spiderRadial; radial != flyRadial; radial = (radial + radialChange + RADIALS.length()) % RADIALS.length()) {
                     path.append("-").append(RADIALS.charAt((radial + radialChange + RADIALS.length()) % RADIALS.length())).append(flyRing);
-                }
-            } else {
-                // блок 5
-                for (int i = spiderRing; i > 0; i--) {
-                    path.append("-").append(RADIALS.charAt(spiderRadial)).append(i);
-                }
-                // блок 6
-                path.append("-A0");
-                for (int i = 1; i <= flyRing; i++) {
-                    path.append("-").append(RADIALS.charAt(flyRadial)).append(i);
                 }
             }
         }
