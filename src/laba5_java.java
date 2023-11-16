@@ -117,7 +117,8 @@ public class laba5_java {
         int flyRadial = RADIALS.indexOf(fly.charAt(0));
         int flyRing = Character.getNumericValue(fly.charAt(1));
 
-        StringBuilder path = new StringBuilder(spider);
+        StringBuilder path = new StringBuilder();
+        path.append(spider);
 
         int angleDistance = Math.min(Math.abs(spiderRadial - flyRadial), RADIALS.length() - Math.abs(spiderRadial - flyRadial));
         // блок 1
