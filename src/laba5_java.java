@@ -88,7 +88,7 @@ public class laba5_java {
             return false; // Если не совпадают,возвращает false
         }
 
-        Map<Character, Character> patternMap = new HashMap<>(); // Создается карта для хранения соответствий между символами первой и второй строки.
+        Map<Character, Character> patternMap = new HashMap<>(); // Создается карта для хранения символов первой и второй строки.
         for (int i = 0; i < str1.length(); i++) { // по каждому символу первой строки.
             char ch1 = str1.charAt(i);
             char ch2 = str2.charAt(i); // Получение текущих символов обеих строк на позиции i.
@@ -111,7 +111,7 @@ public class laba5_java {
 // возвращает кратчайший путь для паука, чтобы добраться до мухи.
 
     private static final String RADIALS = "ABCDEFGH"; // Строка для представления радиалов
-
+// final - иниц один раз и класс не может быть унаследован
     public static String spiderVsFly(String spider, String fly) {
         int spiderRadial = RADIALS.indexOf(spider.charAt(0)); // индекс радиала, на котором находится паук.
         int spiderRing = Character.getNumericValue(spider.charAt(1)); // Определяется номер кольца, на котором находится паук
@@ -129,7 +129,7 @@ public class laba5_java {
             int angleDistance = Math.min(Math.abs(spiderRadial - flyRadial), RADIALS.length() - Math.abs(spiderRadial - flyRadial));
             // Вычисляется кратчайшее угловое расстояние между радиалами паука и мухи.
             if (angleDistance < 3 || spiderRing == 0 || flyRing == 0) {
-                // Спускаемся или поднимаемся по кольцам
+                // Спускаемся или поднимаемся по кольцам (true- -1, false - 1)
                 int ringChange = spiderRing > flyRing ? -1 : 1;
                 for (int ring = spiderRing; ring != flyRing; ring += ringChange) {
                     path.append("-").append(RADIALS.charAt(spiderRadial)).append(ring + ringChange);
@@ -163,7 +163,7 @@ public class laba5_java {
 // Преобразование числа в строку не допускается, поэтому подход является рекурсивным
     public static int digitsCount(long n) {
 
-        if (n >= 0 && n <= 9) { // Это базовый случай рекурсии
+        if (n >= 0 && n <= 9) { // Это базовый случай рекурсии, от 0 до 9
             return 1;
         }
 
@@ -184,15 +184,15 @@ public class laba5_java {
 
     private static boolean isValidWord(String guess, String word) {
         Map<Character, Integer> letterCounts = new HashMap<>(); // Создается карта для подсчета количества каждой буквы в исходном слове.
-        for (char c : word.toCharArray()) {
+        for (char c : word.toCharArray()) { // каждую букву в ворд
             letterCounts.put(c, letterCounts.getOrDefault(c, 0) + 1);
         } // заполняет карту letterCounts, подсчитывая количество каждой буквы в слове word.
 
         for (char c : guess.toCharArray()) { // каждую букву
             if (!letterCounts.containsKey(c) || letterCounts.get(c) == 0) {
-                return false; // если нет или равна нулю
+                return false; // если нет буквы в ворд или равна нулю
             }
-            letterCounts.put(c, letterCounts.get(c) - 1);
+            letterCounts.put(c, letterCounts.get(c) - 1); // обновление карты леттеркаунтс хранит кол-во каждый буквы ворд
         }
         return true;
     }
@@ -203,22 +203,22 @@ public class laba5_java {
         } else if (guess.length() == 4) {
             return 2;
         } else if (guess.length() == 5) {
-            return 3; // В зависимости от длины догадки возвращаются различные количество очков.
+            return 3; // В зависимости от длины возвращаются различные количество очков.
         } else if (guess.length() == 6) {
-            if (guess.equals(word)) {
-                return 54; // Возвращается 54 очка за точное совпадение или анаграмму исходного слова, иначе возвращается 0 очков.
+            if (guess.equals(word)) { // если гуес=ворд то 54 очка
+                return 54; // Возвращается 54 очка за точное совпадение иначе возвращается 0 очков.
             }
-            // Check for anagrams
+
             Map<Character, Integer> guessCounts = new HashMap<>(); // для хранения количества каждой буквы
             Map<Character, Integer> wordCounts = new HashMap<>(); // для хранения количества каждой буквы
             for (char c : guess.toCharArray()) {
                 guessCounts.put(c, guessCounts.getOrDefault(c, 0) + 1);
-            } // не было то 0
+            } // каждая буква в карту гуес-каунтс, если буква есть в карте то кол-во на +1
             for (char c : word.toCharArray()) {
                 wordCounts.put(c, wordCounts.getOrDefault(c, 0) + 1);
             }
             if (guessCounts.equals(wordCounts)) {
-                return 54; // если гуес является ворд то 54 очка
+                return 54; // если гуес является ворд то 54 очка (за анаграму)
             }
         }
         return 0;
@@ -269,7 +269,8 @@ public class laba5_java {
         // результат не будет отрицательным.
         requiredScore = Math.max(0, requiredScore); // Округляется до ближайшего целого числа и форматируется как строка с процентом.
         return String.format("%d%%", Math.round(requiredScore));
-    }
+    } // %d - инт (%% - для вставски символа процента в строку)
+    // math.round - используется для округления числа с плавающей точкой
 
     // Задание 7 Создайте функцию, которая будет шифровать и дешифровать сообщения с использованием шифра Цезаря. Шифр Цезаря – это метод шифрования,
 // в котором каждая буква в сообщении сдвигается на фиксированное количество позиций в алфавите.
@@ -318,7 +319,7 @@ public class laba5_java {
 
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm"); // Создается новый DateTimeFormatter для вывода результата.
         return zonedDateTimeB.format(outputFormatter);
-    }
+    } // ofPattern для создания форматтера даты с шаблоном
 
 
     // Задание 10 Напишите функцию, которая принимает неотрицательное целое число и возвращает true, если целое число является новым числом, и false, если это не так.
