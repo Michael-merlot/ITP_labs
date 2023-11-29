@@ -9,17 +9,17 @@ import java.util.Stack;
 import java.util.Map;
 public class laba6_java {
     public static void main(String[] args) {
-        System.out.println(hiddenAnagram("My world evolves in a beautiful space called Tesh.", "sworn love lived"));
-        System.out.println(hiddenAnagram("An old west action hero actor", "Clint Eastwood"));
-        System.out.println(hiddenAnagram("Mr. Mojo Rising could be a song title", "Jim Morrison"));
-        System.out.println(hiddenAnagram("Banana? margaritas", "ANAGRAM"));
-        System.out.println(hiddenAnagram("D  e b90it->?$ (c)a r...d,,#~", "bad credit"));
-        System.out.println(hiddenAnagram("Bright is the moon", "Bongo mirth"));
+        System.out.println(hiddenAnagram("My world evolves in a beautiful space called Tesh.", "sworn love lived")); // worldevolvesin
+        System.out.println(hiddenAnagram("An old west action hero actor", "Clint Eastwood")); // noldwestactio
+        System.out.println(hiddenAnagram("Mr. Mojo Rising could be a song title", "Jim Morrison")); // mrmojorisin
+        System.out.println(hiddenAnagram("Banana? margaritas", "ANAGRAM")); // anamarg
+        System.out.println(hiddenAnagram("D  e b90it->?$ (c)a r...d,,#~", "bad credit")); // debitcard
+        System.out.println(hiddenAnagram("Bright is the moon", "Bongo mirth")); // notfound
         System.out.println("---");
 
-        System.out.println(collect("intercontinentalisationalism", 6));
-        System.out.println(collect("strengths", 3));
-        System.out.println(collect("pneumonoultramicroscopicsilicovolcanoconiosis", 15));
+        System.out.println(collect("intercontinentalisationalism", 6)); // [ationa, ntalis, ontine, interc]
+        System.out.println(collect("strengths", 3)); // [ths, eng, str]
+        System.out.println(collect("pneumonoultramicroscopicsilicovolcanoconiosis", 15)); // [volcanoconiosis, croscopicsilico, pneumonoultrami]
         System.out.println("---");
 
         System.out.println(nicoCipher("myworldevolvesinhers", "tesh")); // "yowmledrovlvsnieesrh"
