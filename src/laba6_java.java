@@ -9,66 +9,66 @@ import java.util.Stack;
 import java.util.Map;
 public class laba6_java {
     public static void main(String[] args) {
-        System.out.println(hiddenAnagram("My world evolves in a beautiful space called Tesh.", "sworn love lived")); // worldevolvesin
-        System.out.println(hiddenAnagram("An old west action hero actor", "Clint Eastwood")); // noldwestactio
-        System.out.println(hiddenAnagram("Mr. Mojo Rising could be a song title", "Jim Morrison")); // mrmojorisin
-        System.out.println(hiddenAnagram("Banana? margaritas", "ANAGRAM")); // anamarg
-        System.out.println(hiddenAnagram("D  e b90it->?$ (c)a r...d,,#~", "bad credit")); // debitcard
-        System.out.println(hiddenAnagram("Bright is the moon", "Bongo mirth")); // notfound
+        System.out.println(hiddenAnagram("My world evolves in a beautiful space called Tesh.", "sworn love lived"));
+        System.out.println(hiddenAnagram("An old west action hero actor", "Clint Eastwood"));
+        System.out.println(hiddenAnagram("Mr. Mojo Rising could be a song title", "Jim Morrison"));
+        System.out.println(hiddenAnagram("Banana? margaritas", "ANAGRAM"));
+        System.out.println(hiddenAnagram("D  e b90it->?$ (c)a r...d,,#~", "bad credit"));
+        System.out.println(hiddenAnagram("Bright is the moon", "Bongo mirth"));
         System.out.println("---");
 
-        System.out.println(collect("intercontinentalisationalism", 6)); // [ationa, ntalis, ontine, interc]
-        System.out.println(collect("strengths", 3)); // [ths, eng, str]
-        System.out.println(collect("pneumonoultramicroscopicsilicovolcanoconiosis", 15)); // [volcanoconiosis, croscopicsilico, pneumonoultrami]
+        System.out.println(collect("intercontinentalisationalism", 6));
+        System.out.println(collect("strengths", 3));
+        System.out.println(collect("pneumonoultramicroscopicsilicovolcanoconiosis", 15));
         System.out.println("---");
 
-        System.out.println(nicoCipher("myworldevolvesinhers", "tesh")); // "yowmledrovlvsnieesrh"
-        System.out.println(nicoCipher("andiloveherso", "tesha")); // "lnidaevheo s or"
-        System.out.println(nicoCipher("mubashirhassan", "crazy")); // "bmusarhiahass n"
-        System.out.println(nicoCipher("edabitisamazing", "matt")); // "deabtiismaaznig "
-        System.out.println(nicoCipher("iloveher", "612345")); // "lovehir    e"
+        System.out.println(nicoCipher("myworldevolvesinhers", "tesh"));
+        System.out.println(nicoCipher("andiloveherso", "tesha"));
+        System.out.println(nicoCipher("mubashirhassan", "crazy"));
+        System.out.println(nicoCipher("edabitisamazing", "matt"));
+        System.out.println(nicoCipher("iloveher", "612345"));
         System.out.println("---");
 
-        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1, 2, 3, 9, 4, 5, 15}, 45))); // [9, 5]
-        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1, 2, 3, 9, 4, 15, 3, 5}, 45))); // [3, 15]
-        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1,  2, -1,  4,  5,  6,  10, 7}, 20))); // [4, 5]
-        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1, 2, 3, 4, 5,  6, 7, 8, 9, 10}, 10))); // [2, 5]
-        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{100, 12, 4, 1, 2}, 15))); // []
+        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1, 2, 3, 9, 4, 5, 15}, 45)));
+        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1, 2, 3, 9, 4, 15, 3, 5}, 45)));
+        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1,  2, -1,  4,  5,  6,  10, 7}, 20)));
+        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{1, 2, 3, 4, 5,  6, 7, 8, 9, 10}, 10)));
+        System.out.println(java.util.Arrays.toString(twoProduct(new int[]{100, 12, 4, 1, 2}, 15)));
         System.out.println("---");
 
-        System.out.println(java.util.Arrays.toString(isExact(6)));     // [6, 3]
-        System.out.println(java.util.Arrays.toString(isExact(24)));    // [24, 4]
-        System.out.println(java.util.Arrays.toString(isExact(125)));   // []
-        System.out.println(java.util.Arrays.toString(isExact(720)));   // [720, 6]
-        System.out.println(java.util.Arrays.toString(isExact(1024)));  // []
-        System.out.println(java.util.Arrays.toString(isExact(40320))); // [40320, 8]
+        System.out.println(java.util.Arrays.toString(isExact(6)));
+        System.out.println(java.util.Arrays.toString(isExact(24)));
+        System.out.println(java.util.Arrays.toString(isExact(125)));
+        System.out.println(java.util.Arrays.toString(isExact(720)));
+        System.out.println(java.util.Arrays.toString(isExact(1024)));
+        System.out.println(java.util.Arrays.toString(isExact(40320)));
         System.out.println("---");
 
-        System.out.println(fractions("0.(6)"));        // "2/3"
-        System.out.println(fractions("1.(1)"));        // "10/9"
-        System.out.println(fractions("3.(142857)"));   // "22/7"
-        System.out.println(fractions("0.19(2367)"));   // "5343/27775"
-        System.out.println(fractions("0.1097(3)"));    // "823/7500"
+        System.out.println(fractions("0.(6)"));
+        System.out.println(fractions("1.(1)"));
+        System.out.println(fractions("3.(142857)"));
+        System.out.println(fractions("0.19(2367)"));
+        System.out.println(fractions("0.1097(3)"));
         System.out.println("---");
 
-        System.out.println(pilish_string("33314444")); // "333 1 4444"
-        System.out.println(pilish_string("TOP")); // "TOP"
-        System.out.println(pilish_string("X")); // "XXX"
-        System.out.println(pilish_string("")); // ""
+        System.out.println(pilish_string("33314444"));
+        System.out.println(pilish_string("TOP"));
+        System.out.println(pilish_string("X"));
+        System.out.println(pilish_string(""));
         System.out.println("---");
 
-        System.out.println(evaluateExpression("3 + 5 * (2 - 6)")); // -17
-        System.out.println(evaluateExpression("6 - 18 / (4 - 1)")); // 0
-        System.out.println(evaluateExpression("6 / 0")); // Error: Cannot divide by zero
+        System.out.println(evaluateExpression("3 + 5 * (2 - 6)"));
+        System.out.println(evaluateExpression("6 - 18 / (4 - 1)"));
+        System.out.println(evaluateExpression("6 / 0"));
         System.out.println("---");
 
-        System.out.println(isValid("aabbcd")); // "NO"
-        System.out.println(isValid("aabbccddeefghi")); // "NO"
-        System.out.println(isValid("abcdefghhgfedecba")); // "YES"
+        System.out.println(isValid("aabbcd"));
+        System.out.println(isValid("aabbccddeefghi"));
+        System.out.println(isValid("abcdefghhgfedecba"));
         System.out.println("---");
 
-        System.out.println(findLCS("abcd", "bd")); // "bd"
-        System.out.println(findLCS("aggtab", "gxtxamb")); // "gtab"
+        System.out.println(findLCS("abcd", "bd"));
+        System.out.println(findLCS("aggtab", "gxtxamb"));
         System.out.println("---");
 
 
@@ -111,7 +111,7 @@ public class laba6_java {
             }
         }
 
-        return "notfound";
+        return "notfound"; // worldevolvesin, noldwestactio, mrmojorisin, anamarg, debitcard, notfound
     }
     // Задание 2⦁	Напишите функцию, которая возвращает массив строк,
     // заполненных из срезов символов n-длины данного слова (срез за другим, в то время как n-длина применяется к слову).
@@ -122,10 +122,10 @@ public class laba6_java {
 
         List<String> slices = collect(s.substring(n), n);
         slices.add(s.substring(0, n));
-        if (slices.size() == 1) {
+        if (slices.size() == 1) { // сортировка для уменьшения кол-во операций
             Collections.sort(slices);
         }
-        return slices;
+        return slices; // [ationa, ntalis, ontine, interc], [ths, eng, str], [volcanoconiosis, croscopicsilico, pneumonoultrami]
     }
     // Задание 3⦁	В шифре Nico кодирование осуществляется путем создания цифрового ключа и
     // присвоения каждой буквенной позиции сообщения с помощью предоставленного ключа.
@@ -149,13 +149,13 @@ public class laba6_java {
                 block[j] = message.charAt(i + originalIndex);
             }
             for (char c : block) {
-                encoded.append(c);
+                encoded.append(c); // добавление символов в encoded
             }
         }
 
         return encoded.toString();
     }
-
+// Pair для хранения пар символов
     static class Pair implements Comparable<Pair> {
         char character;
         int index;
@@ -166,7 +166,7 @@ public class laba6_java {
 
         @Override
         public int compareTo(Pair other) {
-            return Character.compare(this.character, other.character);
+            return Character.compare(this.character, other.character); // yowmledrovlvsnieesrh, lnidaevheo s or, bmusarhiahass n, deabtiismaaznig, lovehir    e
         }
     }
     // Задание 4⦁	Создайте метод, который принимает массив arr и число n и
@@ -179,7 +179,7 @@ public class laba6_java {
             }
             set.add(value);
         }
-        return new int[]{};
+        return new int[]{}; // [9, 5], [3, 15], [4, 5], [2, 5], []
     }
     // Задание 5⦁	Создайте рекурсивную функцию, которая проверяет, является ли число точной верхней границей факториала n.
     // Если это так, верните массив точной факториальной границы и n, или иначе, пустой массив.
@@ -193,7 +193,7 @@ public class laba6_java {
         } else if (factorial > number) {
             return new int[]{};
         }
-        return checkFactorial(number, factorial * (n + 1), n + 1);
+        return checkFactorial(number, factorial * (n + 1), n + 1); // [6, 3], [24, 4], [], [720, 6], [], [40320, 8]
     }
     // Задание 6 Создайте функцию, которая принимает десятичную дробь в строковой форме с повторяющейся частью в круглых скобках
     // и возвращает эквивалентную дробь в строковой форме и в наименьших членах.
@@ -223,7 +223,7 @@ public class laba6_java {
         numerator = numerator.divide(gcd);
         denominator = denominator.divide(gcd);
 
-        return numerator + "/" + denominator;
+        return numerator + "/" + denominator; // 2/3, 10/9, 22/7, 5343/27775, 823/7500
     }
 
     // Задание 7 ⦁	В этой задаче преобразуйте строку в серию слов (или последовательности символов), разделенных одним пробелом,
@@ -239,7 +239,7 @@ public class laba6_java {
                 break;
             }
 
-            if (result.length() > 0) {
+            if (result.length() > 0) { // если есть символы, то добавляется пробел
                 result.append(" ");
             }
 
@@ -254,7 +254,7 @@ public class laba6_java {
             charIndex += digit;
         }
 
-        return result.toString();
+        return result.toString(); // 333 1 4444, TOP, XXX, ""
     }
     // Задание 8 Реализуйте алгоритм, который разбирает строку и вычисляет результат выражения, учитывая приоритет операций, скобки и т. д.
    // Математические операции, которые нужно поддерживать, включают в себя сложение, вычитание, умножение, деление и скобки.
@@ -326,7 +326,7 @@ public class laba6_java {
                 }
                 return a / b;
         }
-        return 0;
+        return 0; // -17, 0, Error: Invalid Expression
     }
     // Задание 9⦁	Шерлок считает строку действительной, если все символы строки встречаются одинаковое количество раз. Также допустимо, если он может удалить только 1 символ из 1 индекса в строке,
     // а остальные символы будут встречаться одинаковое количество раз. Для данной строки str определите, действительна ли она. Если да, верните «ДА», в противном случае верните «НЕТ».
@@ -366,7 +366,7 @@ public class laba6_java {
             }
         }
 
-        return "NO";
+        return "NO"; // NO, NO, YES
     }
     // Задание 10 Создайте функцию, которая будет находить наибольшую общую подпоследовательность (LCS) для двух строк.
     // LCS – это самая длинная последовательность символов, которая встречается как подпоследовательность в обеих строках.
@@ -406,6 +406,6 @@ public class laba6_java {
             }
         }
 
-        return new String(lcs);
+        return new String(lcs); // bd, gtab
     }
 }
