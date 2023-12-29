@@ -10,18 +10,16 @@ public class Palindrome {
         }
     }
 
-    // Метод для переворачивания строки
     public static String reverseString(String s) {
         String reverse = "";
         for (int i = s.length() - 1; i >= 0; i--) {
-            reverse += s.charAt(i); // Добавляем символы в обратном порядке
+            reverse += s.charAt(i);
         }
         return reverse;
     }
 
-    // Метод для проверки палиндрома
     public static boolean isPalindrome(String s) {
         String reversed = reverseString(s);
-        return s.equals(reversed); // Сравниваем исходную и перевернутую строку
+        return s.equals(reversed);
     }
 }
